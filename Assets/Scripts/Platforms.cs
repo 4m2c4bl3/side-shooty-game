@@ -85,7 +85,6 @@ public class Platforms : MonoBehaviour {
 
 		if (disappearing && collisionInfo.gameObject.tag == "Player")
         {
-			print ("bep");
             if (stage == 0 && damageTimer.Ok())
             {
                 damageTimer.setTimer(warningLength);
@@ -106,7 +105,6 @@ public class Platforms : MonoBehaviour {
 
 		if (damaging && stage == 2 && waitTimer.Ok() && collisionInfo.gameObject.tag == "Player") 
 		{
-			print ("bep");
 			floorDamage(damageGiven);
 
 				}
@@ -161,7 +159,7 @@ public class Platforms : MonoBehaviour {
         if (stage == 0)
         {
             vis.a = 1;
-            gameObject.GetComponent<BoxCollider>().center = Vector3.zero;
+            collider.enabled = true;
         }
         else if (stage == 1)
         {
@@ -170,7 +168,7 @@ public class Platforms : MonoBehaviour {
         else if (stage == 2)
         {
             vis.a = 0;
-            gameObject.GetComponent<BoxCollider>().center = new Vector3(65535.0f, 65535.0f, 65535.0f); //i.e.: Far Away.
+            collider.enabled = false;
 			waitTimer.setTimer(5);
 
         }

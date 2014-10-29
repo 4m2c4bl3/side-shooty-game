@@ -99,6 +99,11 @@ public class Control : MonoBehaviour
 			movement.x = backforce; //not..you get the point
 			
 		}
+
+        if (grounded && transform.parent != null)
+        {
+            TestGround(transform.parent.collider);
+        }
 		
 		if (!grounded)
 		{
@@ -179,13 +184,18 @@ public class Control : MonoBehaviour
         }
 		else if (collision.gameObject.tag == "Ground")
 		{
-			RaycastHit rayhit;
-			Physics.Raycast(transform.position, Vector3.down, out rayhit, collider.bounds.extents.y + 0.4f);
-			if (rayhit.collider == null || rayhit.collider != collision.collider)
-			{
-				grounded = false;
-                transform.parent = null;
-			}
+            TestGround(collision.collider);
 		}
 	}
+
+    void TestGround(Collider col)
+    {
+        RaycastHit rayhit;
+        Physics.Raycast(transform.position, Vector3.down, out rayhit, collider.bounds.extents.y + 0.4f, 1 << 10 | 1 << 11);
+        if (rayhit.collider == null || rayhit.collider != col)
+        {
+            grounded = false;
+            transform.parent = null;
+        }
+    }
 }
