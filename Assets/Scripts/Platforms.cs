@@ -71,7 +71,7 @@ public class Platforms : MonoBehaviour {
             
         }
 
-		if (disappearing && stage ==2 && waitTimer.Ok ()) 
+		if (disappearing && stage == 2 && waitTimer.Ok ()) 
 		{
 				disRun(0);
 				waitTimer.sleep();
@@ -80,7 +80,7 @@ public class Platforms : MonoBehaviour {
 
 	}
 
-	void OnCollisionStay(Collision collisionInfo)
+	void OnTriggerStay(Collider collisionInfo)
     {
 
 		if (disappearing && collisionInfo.gameObject.tag == "Player")
@@ -88,7 +88,8 @@ public class Platforms : MonoBehaviour {
             if (stage == 0 && damageTimer.Ok())
             {
                 damageTimer.setTimer(warningLength);
-                disRun(1);                
+                disRun(1);
+                
             }
             else if (stage == 1 && damageTimer.Ok())
             {
@@ -105,22 +106,26 @@ public class Platforms : MonoBehaviour {
 		if (damaging && stage == 2 && waitTimer.Ok() && collisionInfo.gameObject.tag == "Player") 
 		{
 			floorDamage(damageGiven);
+
 				}
+
     }
 
 	void floorDamage (int strength)
 	{
+
 		waitTimer.setTimer(damageSpeed);
 		var player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<Character>().pureDamaged(strength);
+
 		}
 
-	void OnCollisionExit (Collision collisionInfo)
+    void OnTriggerExit(Collider collisionInfo)
 	{
 		bool notDone = stage == 0 || stage == 1;
-		if (disappearing && collisionInfo.gameObject.tag == "Player" && notDone)
+        if (disappearing && collisionInfo.gameObject.tag == "Player" && notDone)
 		{
-				disRun(0);				
+            disRun(0);				
 		}
 	}
 
@@ -154,8 +159,7 @@ public class Platforms : MonoBehaviour {
         if (stage == 0)
         {
             vis.a = 1;
-			//Physics.IgnoreLayerCollision(8, 10, false);
-			gameObject.collider.enabled = true;
+            collider.enabled = true;
         }
         else if (stage == 1)
         {
@@ -164,10 +168,7 @@ public class Platforms : MonoBehaviour {
         else if (stage == 2)
         {
             vis.a = 0;
-			//Physics.IgnoreLayerCollision(8, 10, true);
-			gameObject.collider.enabled = false;
-			var playerLegs = GameObject.FindGameObjectWithTag("Player");
-			playerLegs.GetComponent<Control>().grounded = false;
+            collider.enabled = false;
 			waitTimer.setTimer(5);
 
         }

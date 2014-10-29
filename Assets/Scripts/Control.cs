@@ -21,7 +21,6 @@ public class Control : MonoBehaviour
 	float aircontrol = 1.75f; //Change to control speed when in air
 	public bool grounded = false;
 	Vector3 movement = Vector3.zero;
-	GameObject groundedOn;
 	//by maxime end
 	
 	
@@ -54,8 +53,7 @@ public class Control : MonoBehaviour
 	//}
 	
 	//	return false;
-	//}
-	
+	//}	
 	
 	void Update()
 	{
@@ -90,7 +88,8 @@ public class Control : MonoBehaviour
 		{
 			yforce = 4.5f; //Intial jump force
 			grounded = false;
-			groundedOn = null;
+            transform.parent = null;
+
 		}
 		
 		movement.y = yforce;
@@ -100,6 +99,11 @@ public class Control : MonoBehaviour
 			movement.x = backforce; //not..you get the point
 			
 		}
+
+        if (grounded && transform.parent != null)
+        {
+            TestGround(transform.parent.collider);
+        }
 		
 		if (!grounded)
 		{
@@ -123,15 +127,6 @@ public class Control : MonoBehaviour
 		//Needs to be done in fixed update because rigidbodies digs it
 		rigidbody.velocity = Vector3.zero;
 		rigidbody.MovePosition(rigidbody.position + (movement * 10.0f * Time.deltaTime));
-		if (groundedOn != null)
-		{
-			float newY = groundedOn.transform.position.y + groundedOn.collider.bounds.extents.y + collider.bounds.extents.y;
-			rigidbody.position = new Vector3(rigidbody.position.x, newY, rigidbody.position.z);
-		}
-		else
-		{
-			grounded = false;
-		}
 	}
 	//by maxime end
 	
@@ -139,16 +134,10 @@ public class Control : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "Ground")
 		{
-			if (collision.contacts.All(x => x.normal == Vector3.up)) // MAJICKS
-			{
-				yforce = 0.0f;
-				grounded = true;
-				groundedOn = collision.gameObject;
-				if (hitback)
-				{
-					hitback = false;
-				}
-			}
+            if (collision.contacts.All(x => x.normal == Vector3.down)) // MOAR MAJICKS
+            {
+                yforce = 0.0f;
+            }
 		}
 		
 		if (collision.gameObject.name == "Enemy" && gameObject.name == "Player")
@@ -168,18 +157,45 @@ public class Control : MonoBehaviour
 			}
 		}
 	}
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground" && grounded == false)
+        {
+            if (collision.contacts.All(x => x.normal == Vector3.up))
+            {
+                yforce = 0.0f;
+                grounded = true;
+                transform.parent = collision.gameObject.transform;
+                if (hitback)
+                {
+                    hitback = false;
+                }
+            }
+        }
+    }
 	
 	void OnCollisionExit(Collision collision)
 	{
-		if (collision.gameObject.tag == "Ground")
+        if (collision == null)
+        {
+            grounded = false;
+            transform.parent = null;
+        }
+		else if (collision.gameObject.tag == "Ground")
 		{
-			RaycastHit rayhit;
-			Physics.Raycast(transform.position, Vector3.down, out rayhit, collider.bounds.extents.y + 0.4f);
-			if (rayhit.collider == null || rayhit.collider != collision.collider)
-			{
-				grounded = false;
-				groundedOn = null;
-			}
+            TestGround(collision.collider);
 		}
 	}
+
+    void TestGround(Collider col)
+    {
+        RaycastHit rayhit;
+        Physics.Raycast(transform.position, Vector3.down, out rayhit, collider.bounds.extents.y + 0.4f, 1 << 10 | 1 << 11);
+        if (rayhit.collider == null || rayhit.collider != col)
+        {
+            grounded = false;
+            transform.parent = null;
+        }
+    }
 }
