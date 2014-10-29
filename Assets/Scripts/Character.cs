@@ -54,6 +54,15 @@ public class Character : MonoBehaviour {
             Application.LoadLevel("over");
         }
     }
+    void OnTriggerEnter (Collider collision)
+    {
+        if (collision.gameObject.name == "LevelComplete" && gameObject.name == "Player")
+        {
+            var scoreOtron = GameObject.FindGameObjectWithTag("Score");
+            scoreOtron.GetComponent<Scores>().completedMap = true;
+            Application.LoadLevel("over");
+        }
+    }
 
     void OnCollisionEnter (Collision collision)
     {

@@ -140,9 +140,10 @@ public class Control : MonoBehaviour
                 yforce = 0.0f;
             }
 		}
-		
+
 		if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
 		{
+            
 			BroadcastMessage("GotHit", collision);
 			hitback = true;
 			backforce = 1f * -View.x;
