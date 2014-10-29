@@ -18,7 +18,7 @@ public class Attack : MonoBehaviour
 
     void OnCollisionEnter (Collision hit)
     {
-        bool desTROyit = hit.gameObject.name == "Enemy" || hit.gameObject.name == "Platform" || hit.gameObject.name == "Boundary";
+        bool desTROyit = hit.gameObject.tag == "Enemy" || hit.gameObject.name == "Platform" || hit.gameObject.name == "Boundary";
         if (desTROyit)
             Destroy(gameObject);
 

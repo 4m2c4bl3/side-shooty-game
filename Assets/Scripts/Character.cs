@@ -41,7 +41,7 @@ public class Character : MonoBehaviour {
                 CurHP = MaxHP;
                 transform.position = startPos;
             }
-            if (gameObject.name == "Enemy")
+            if (gameObject.tag == "Enemy")
             {
                 Destroy(gameObject); 
                 var scoreObj = GameObject.FindGameObjectWithTag("Score");
@@ -57,7 +57,7 @@ public class Character : MonoBehaviour {
 
     void OnCollisionEnter (Collision collision)
     {
-        if (gameObject.name == "Enemy")
+        if (gameObject.tag == "Enemy")
         {
             Attack enemyattack = collision.gameObject.GetComponent<Attack>();
 
@@ -76,7 +76,7 @@ public class Character : MonoBehaviour {
         {
             Damaged(enemyattack.Strength);
         }
-        if (collision.gameObject.name == "Enemy" && gameObject.name == "Player")
+        if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
         {
             Damaged(collision.gameObject.GetComponent<Souls>().Strength);
         }

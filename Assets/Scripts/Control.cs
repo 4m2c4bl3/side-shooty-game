@@ -141,7 +141,7 @@ public class Control : MonoBehaviour
             }
 		}
 		
-		if (collision.gameObject.name == "Enemy" && gameObject.name == "Player")
+		if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
 		{
 			BroadcastMessage("GotHit", collision);
 			hitback = true;
