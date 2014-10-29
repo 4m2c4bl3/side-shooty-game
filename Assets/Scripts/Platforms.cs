@@ -120,10 +120,10 @@ public class Platforms : MonoBehaviour {
 
 		}
 
-	void OnTriggerExit (Collider collider)
+    void OnTriggerExit(Collider collisionInfo)
 	{
 		bool notDone = stage == 0 || stage == 1;
-        if (disappearing && collider.gameObject.tag == "Player" && notDone)
+        if (disappearing && collisionInfo.gameObject.tag == "Player" && notDone)
 		{
             disRun(0);				
 		}
