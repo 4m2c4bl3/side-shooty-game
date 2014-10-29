@@ -50,7 +50,6 @@ public class AI : MonoBehaviour {
 
     void lerpFly ()
     {
-        Debug.Log(progress);
         if (progress >= 1)
         {
             progress = 1;
