@@ -6,7 +6,7 @@ public class Menu : MonoBehaviour {
   
     void OnMouseUpAsButton()
     {
-        if (gameObject.name == "Start")
+        if (gameObject.name == "Start" || gameObject.name == "Reload")
         {
             Application.LoadLevel("game");
         }
@@ -34,4 +34,20 @@ public class Menu : MonoBehaviour {
             controlInfo.guiText.text = "";
         }
     }
+	void Start ()
+	{
+		if (gameObject.name == "FinalScore")
+		{
+			var scoreData = GameObject.FindGameObjectWithTag("Score");
+			if (scoreData.gameObject.GetComponent<Scores>().completedMap == true)
+			{
+				guiText.text = "You Won! \n You killed " + scoreData.gameObject.GetComponent<Scores>().enemiesKilled + " enemies.\n You died " + scoreData.gameObject.GetComponent<Scores>().livesLost + " times.";
+			}
+			if (scoreData.gameObject.GetComponent<Scores>().completedMap == false)
+			{
+				guiText.text = "You Lost. \n You killed " + scoreData.gameObject.GetComponent<Scores>().enemiesKilled + " enemies.\n You died " + scoreData.gameObject.GetComponent<Scores>().livesLost + " times.";
+			}
+
+		}
+}
 }

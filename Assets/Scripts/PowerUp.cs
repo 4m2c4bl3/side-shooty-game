@@ -37,22 +37,28 @@ public class PowerUp : MonoBehaviour {
         var player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponentInParent<Control>().hangtime = 0.05f;
 		//grants power 1
+		var scoreObj = GameObject.FindGameObjectWithTag("Score");
+		scoreObj.GetComponent<Scores>().powerUps++;
 		Destroy(gameObject);
 	}
 	void Power2run ()
 	{
 		//grants power 2
+		var scoreObj = GameObject.FindGameObjectWithTag("Score");
+		scoreObj.GetComponent<Scores>().powerUps++;
 		Destroy(gameObject);
 	}
 	void Power3run ()
 	{
 		//grants power 3
+		var scoreObj = GameObject.FindGameObjectWithTag("Score");
+		scoreObj.GetComponent<Scores>().powerUps++;
 		Destroy(gameObject);
 	}
 
-	void OnCollisionEnter (Collision collision)
+    void OnTriggerEnter(Collider other)
 	{
-		if (collision.gameObject.name == "Player") 
+		if (other.gameObject.name == "Player") 
 		{
 		
 			if (Heal)

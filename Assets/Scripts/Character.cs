@@ -6,7 +6,8 @@ public class Character : MonoBehaviour {
     public float MaxHP = 5f;
     public float CurHP = 0f;
     public Souls EquippedSoul;
-    float lives = 2;
+    public float lives = 3;
+    public Vector3 startPos;
 
     // Use this for initialization
     void Start()
@@ -37,6 +38,8 @@ public class Character : MonoBehaviour {
                 lives -= 1;
                 var scoreObj = GameObject.FindGameObjectWithTag("Score");
                 scoreObj.GetComponent<Scores>().livesLost ++;
+                CurHP = MaxHP;
+                transform.position = startPos;
             }
             if (gameObject.name == "Enemy")
             {

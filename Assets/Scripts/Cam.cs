@@ -49,7 +49,6 @@ public class Cam : MonoBehaviour {
 		progress = camProg.progress (startTime, moveSpeed);
 		transform.localPosition = Vector3.Lerp(startPoint, endPoint, progress);
 		if (camProg.progress(startTime, moveSpeed) >= 1)
-			if (progress >= 1)
 		{
 			progress = 1;
 		}

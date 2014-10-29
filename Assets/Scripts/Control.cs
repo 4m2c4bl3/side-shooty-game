@@ -5,7 +5,8 @@ using System.Linq;
 public class Control : MonoBehaviour
 	
 	//I did not make the physics! Everything I did not do is in the 'by maxime' areas. If you guess who helped me with them, you win the game.
-	//I made all stuff relating to hitback though, refering to how he did the jumping. :3c
+    //
+	
 {
 	public Attack BasicBullet;
 	public Souls EquippedSoul;
@@ -94,9 +95,9 @@ public class Control : MonoBehaviour
 		
 		movement.y = yforce;
 		
-		if (hitback) //notbymaxime
+		if (hitback) 
 		{
-			movement.x = backforce; //not..you get the point
+			movement.x = backforce; 
 			
 		}
 
@@ -128,7 +129,7 @@ public class Control : MonoBehaviour
 		rigidbody.velocity = Vector3.zero;
 		rigidbody.MovePosition(rigidbody.position + (movement * 10.0f * Time.deltaTime));
 	}
-	//by maxime end
+	
 	
 	void OnCollisionEnter(Collision collision)
 	{
@@ -198,4 +199,5 @@ public class Control : MonoBehaviour
             transform.parent = null;
         }
     }
+    //by maxime end
 }

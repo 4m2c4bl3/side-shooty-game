@@ -82,7 +82,6 @@ public class Platforms : MonoBehaviour {
 
 	void OnTriggerStay(Collider collisionInfo)
     {
-
 		if (disappearing && collisionInfo.gameObject.tag == "Player")
         {
             if (stage == 0 && damageTimer.Ok())
