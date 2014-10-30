@@ -40,6 +40,12 @@ public class Character : MonoBehaviour {
                 scoreObj.GetComponent<Scores>().livesLost ++;
                 CurHP = MaxHP;
                 transform.position = startPos;
+                gameObject.GetComponent<Control>().movement = Vector3.zero;
+
+                if (lives <= 0)
+                {
+                    Application.LoadLevel("over");
+                }
             }
             if (gameObject.tag == "Enemy")
             {
@@ -47,11 +53,6 @@ public class Character : MonoBehaviour {
                 var scoreObj = GameObject.FindGameObjectWithTag("Score");
                 scoreObj.GetComponent<Scores>().enemiesKilled++;
             }
-        }
-
-        if (lives <= 0)
-        {
-            Application.LoadLevel("over");
         }
     }
     void OnTriggerEnter (Collider collision)

@@ -9,6 +9,7 @@ public class StartGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        GameObject.Find("Player").GetComponent<Control>().isControllable = false;
         guiText.text= "CLIMB";
 		Souls EquippedSoul = Player.GetComponent<Souls> ();
 		EquippedSoul.BroadcastMessage("BaseSoul");
@@ -22,6 +23,7 @@ public class StartGame : MonoBehaviour {
         if (countDown.Ok())
         {
             Destroy(gameObject);
+            GameObject.Find("Player").GetComponent<Control>().isControllable = true;
         }
     }
 

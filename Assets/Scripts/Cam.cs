@@ -9,23 +9,53 @@ public class Cam : MonoBehaviour {
     Vector3 startPoint;
     Vector3 endPoint;
     Vector3 lastView;
-	Vector3 Camleft = new Vector3(-3.5f, 4.6f, -6f);
-	Vector3 Camright = new Vector3(3.5f, 4.6f, -6f);
+    public Vector3 camDef;
+	Vector3 camLeft;
+	Vector3 camRight;
 	Timer camProg = new Timer();
+    public bool jumpin;
+    bool launch = true;
 	
 	//Camera.main.transform.localPosition = Camleft;
     // Camera.main.transform.localPosition = Camright;
 
 	void Start()
 	{
-		startPoint = Camright;
-		endPoint = Camleft;
+        camLeft = new Vector3 (-camDef.x, camDef.y, camDef.z);
+        camRight = new Vector3(camDef.x, camDef.y, camDef.z);
+        startPoint = camRight;
+		endPoint = camLeft;
 	}
+
+    void jumping()
+    {
+        
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<Control>().grounded == false && launch == true)
+        {
+            startPoint.y = 4.6f - 3;
+            endPoint.y = 4.6f - 3;
+            transform.position = new Vector3(transform.position.x, 4.6f - 3, transform.position.x);
+            launch = false; 
+        }
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<Control>().grounded == true)
+        {
+            startPoint.y = 4.6f;
+            endPoint.y = 4.6f;
+            transform.position = new Vector3(transform.position.x, 4.6f, transform.position.x);
+            jumpin = false;
+
+        } 
+  
+    }
 
 
     void Update()
     {
-		
+        if (jumpin == true)
+        {
+            jumping();
+        }
+
 		if (lastView != control.View)
         {
             progress = 1 - progress;
@@ -33,14 +63,14 @@ public class Cam : MonoBehaviour {
 
              if (control.View == Vector3.left)
             {
-				startPoint.x = Camright.x;
-				endPoint.x = Camleft.x;
+				startPoint.x = camRight.x;
+				endPoint.x = camLeft.x;
                 
             }
             if (control.View == Vector3.right)
              {
-				startPoint.x = Camleft.x;
-				endPoint.x = Camright.x;
+				startPoint.x = camLeft.x;
+				endPoint.x = camRight.x;
                 
              }
               

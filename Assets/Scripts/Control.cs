@@ -8,6 +8,7 @@ public class Control : MonoBehaviour
     //
 	
 {
+    public bool isControllable = true;
 	public Attack BasicBullet;
 	public Souls EquippedSoul;
 	//public float Shootrate = 0.5f;
@@ -21,7 +22,7 @@ public class Control : MonoBehaviour
 	bool hitback = false;
 	float aircontrol = 1.75f; //Change to control speed when in air
 	public bool grounded = false;
-	Vector3 movement = Vector3.zero;
+	public Vector3 movement = Vector3.zero;
 	//by maxime end
 	
 	
@@ -58,41 +59,48 @@ public class Control : MonoBehaviour
 	
 	void Update()
 	{
+        rigidbody.sleepVelocity = 0;
 		//Shootrate = EquippedSoul.AttSpeed;
 		bool ShootNow = Input.GetKeyDown(KeyCode.Space) /*&& Shootpause()*/;
-		
-		if (ShootNow)
-		{
-			Shoot();
-		}
-		bool MoveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
-		bool MoveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
-		bool Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-		
-		//by maxime start
-		
-		//Needs to be done in Update because keyboards loves update
-		movement = Vector3.zero;
-		if (MoveRight)
-		{
-			movement += Vector3.right * (grounded ? 1.0f : aircontrol);
-			View = Vector3.right; //notbymaxime
-			
-		}
-		if (MoveLeft)
-		{
-			movement += Vector3.left * (grounded ? 1.0f : aircontrol);
-			View = Vector3.left;//notbymaxime
-			
-		}
-		if (Jump && grounded == true)
-		{
-			yforce = 4.5f; //Intial jump force
-			grounded = false;
-            transform.parent = null;
+		if (isControllable)
+        { 
+		    if (ShootNow)
+		    {
+			    Shoot();
+		    }
+		   
+        }
+        bool MoveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
+        bool MoveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+        bool Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
-		}
 		
+        movement = Vector3.zero;
+        if (isControllable)
+        //by maxime start
+        { 
+		    if (MoveRight)
+		    {
+			    movement += Vector3.right * (grounded ? 1.0f : aircontrol);
+			    View = Vector3.right; //notbymaxime
+			
+		    }
+		    if (MoveLeft)
+		    {
+			    movement += Vector3.left * (grounded ? 1.0f : aircontrol);
+			    View = Vector3.left;//notbymaxime
+			
+		    }
+		    if (Jump && grounded == true)
+		    {
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Cam>().jumpin = true;
+                print("gross fart");
+			    yforce = 4.5f; //Intial jump force
+			    grounded = false;
+                transform.parent = null;
+
+		    }
+          }
 		movement.y = yforce;
 		
 		if (hitback) 
@@ -130,7 +138,6 @@ public class Control : MonoBehaviour
 		rigidbody.MovePosition(rigidbody.position + (movement * 10.0f * Time.deltaTime));
 	}
 	
-	
 	void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.tag == "Ground")
@@ -140,7 +147,6 @@ public class Control : MonoBehaviour
                 yforce = 0.0f;
             }
 		}
-
 		if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
 		{
             
