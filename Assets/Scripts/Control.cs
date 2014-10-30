@@ -14,7 +14,8 @@ public class Control : MonoBehaviour
 	//public float Shootrate = 0.5f;
 	//private float Pause = 0.0f;
 	public Vector3 View = new Vector3(1f, 0f, 0f);
-	public float hangtime = 0.35f;
+    public bool hangYes = false;
+	float hangtime = 0.35f;
 	
 	//by maxime start
 	float backforce = 0.0f;
@@ -30,6 +31,7 @@ public class Control : MonoBehaviour
 	{
 		if (EquippedSoul.Energy >= 0.0)
 		{
+            GameObject.FindGameObjectWithTag("Score").GetComponent<Scores>().sERIOUSsCORES();
 			Vector3 SpawnPoint = transform.position + (View * 1);
             SpawnPoint.y += 0.3f;
 			GameObject swing = Instantiate(BasicBullet.gameObject, SpawnPoint, transform.rotation) as GameObject;
@@ -74,6 +76,7 @@ public class Control : MonoBehaviour
         bool MoveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool MoveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
         bool Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+        bool Hang = Input.GetKey(KeyCode.H);
 
 		
         movement = Vector3.zero;
@@ -100,6 +103,16 @@ public class Control : MonoBehaviour
                 transform.parent = null;
 
 		    }
+
+            if (Hang && hangYes)
+            {
+                hangtime = 0.05f;
+            }
+
+            if (!Hang)
+            {
+                hangtime = 0.35f;
+            }
           }
 		movement.y = yforce;
 		

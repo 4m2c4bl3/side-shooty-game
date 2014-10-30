@@ -8,6 +8,7 @@ public class Character : MonoBehaviour {
     public Souls EquippedSoul;
     public float lives = 3;
     public Vector3 startPos;
+    Timer animTimer = new Timer();
 
     // Use this for initialization
     void Start()
@@ -29,6 +30,19 @@ public class Character : MonoBehaviour {
 
     void Update()
     {
+        if (animTimer.Ok())
+        {
+            if (gameObject.name == "FlyingEnemy" || gameObject.name == "Player")
+            {
+                Renderer renderKid = GetComponentInChildren<Renderer>();
+                renderKid.material.color = Color.white;
+            }
+
+            else
+            {
+                renderer.material.color = Color.white;
+            }
+        }
         if (CurHP <= 0)
         { 
            // Destroy(gameObject); 
@@ -73,7 +87,15 @@ public class Character : MonoBehaviour {
 
             if (enemyattack != null)
             {
+                animTimer.setTimer(0.1f);
+                if (gameObject.name != "FlyingEnemy")
+                {
+                    renderer.material.color = Color.red;
+                }
+                Renderer renderKid = GetComponentInChildren<Renderer>();
+                renderKid.material.color = Color.red;
                 Damaged(enemyattack.Strength);
+
             }
         }
     }
@@ -89,6 +111,9 @@ public class Character : MonoBehaviour {
         if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
         {
             Damaged(collision.gameObject.GetComponent<Souls>().Strength);
+            animTimer.setTimer(0.1f);
+            Renderer renderKid = GetComponentInChildren<Renderer>();
+            renderKid.material.color = Color.yellow;
         }
 
     }

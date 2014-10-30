@@ -12,11 +12,7 @@ public class PlayerGUI : MonoBehaviour {
 	public float power = 1.0f;
 	public float life = 1.0f;
 	public GameObject player;
-	void Start ()
-	{
-
-
-		}
+	
     void OnGUI()
     {
         GUI.Label(new Rect(1, 400, 55, 55), powerIcon);

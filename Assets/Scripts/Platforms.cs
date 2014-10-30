@@ -8,6 +8,7 @@ public class Platforms : MonoBehaviour {
     public float transDistance;
     public bool damaging;
     public bool disappearing;
+    public float startdelay = 0;
     public float safeLength;
     public float warningLength;
     public float dangerLength;
@@ -18,6 +19,7 @@ public class Platforms : MonoBehaviour {
     float progress = 1f;
     public float moveSpeed = 10f;
     int stage = 0;
+    bool dmgWait;
     float startTime = 0;
     Timer damageTimer = new Timer();
 	Timer waitTimer = new Timer();
@@ -26,6 +28,14 @@ public class Platforms : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        if (damaging && startdelay >= 0.1)
+        {
+            damaging = false;
+            dmgWait = true;
+            waitTimer.setTimer(startdelay+safeLength);
+
+        }
 
         startPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         damageTimer.setTimer(safeLength);
@@ -44,7 +54,11 @@ public class Platforms : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
+        if (dmgWait && waitTimer.Ok())
+        {
+            damaging = true;
+        }
+
         if (upDown || leftRight)
         {
             lerpMove(); 

@@ -35,7 +35,7 @@ public class PowerUp : MonoBehaviour {
 	void hangTimerun ()
 	{
         var player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponentInParent<Control>().hangtime = 0.05f;
+        player.GetComponentInParent<Control>().hangYes = true;
 		//grants power 1
 		var scoreObj = GameObject.FindGameObjectWithTag("Score");
 		scoreObj.GetComponent<Scores>().powerUps++;
