@@ -94,7 +94,6 @@ public class Control : MonoBehaviour
 		    if (Jump && grounded == true)
 		    {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Cam>().jumpin = true;
-                print("gross fart");
 			    yforce = 4.5f; //Intial jump force
 			    grounded = false;
                 transform.parent = null;
