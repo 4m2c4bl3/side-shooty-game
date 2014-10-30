@@ -31,6 +31,7 @@ public class Control : MonoBehaviour
 		if (EquippedSoul.Energy >= 0.0)
 		{
 			Vector3 SpawnPoint = transform.position + (View * 1);
+            SpawnPoint.y += 0.3f;
 			GameObject swing = Instantiate(BasicBullet.gameObject, SpawnPoint, transform.rotation) as GameObject;
 			Attack shooted = swing.GetComponent<Attack>();
 			shooted.dir = View;
