@@ -6,10 +6,11 @@ public class Teleport : MonoBehaviour {
     Vector3 to;
     Timer jumpPause = new Timer();
     bool porting = false;
-
+    public GameObject player;
 	void Start () {
 
         to = toset.transform.position;
+        player = GameObject.Find("Player");
 	}
 
     void OnTriggerEnter(Collider collision)
@@ -18,8 +19,8 @@ public class Teleport : MonoBehaviour {
         if (collision.gameObject.name == "Player")
         {
             jumpPause.setTimer(1);
-            GameObject.Find("Player").GetComponent<Control>().movement = Vector3.zero;
-            GameObject.Find("Player").GetComponent<Control>().isControllable = false;
+            Control.mainControl.movement = Vector3.zero;
+            Control.mainControl.isControllable = false;
             porting = true;
         }
     }
@@ -28,9 +29,10 @@ public class Teleport : MonoBehaviour {
     {
         if (jumpPause.Ok() && porting)
         {
-            GameObject.Find("Player").GetComponent<Control>().isControllable = true;
-            GameObject.Find("Player").GetComponent<Control>().grounded = false;
-            GameObject.Find("Player").transform.position = to;
+            Control.mainControl.isControllable = true;
+            Control.mainControl.grounded = false;
+            player.transform.position = to;
+            player.GetComponent<Character>().startPos = to;
             porting = false;
             
         }

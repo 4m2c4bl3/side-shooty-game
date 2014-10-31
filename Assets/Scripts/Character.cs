@@ -14,6 +14,7 @@ public class Character : MonoBehaviour {
     void Start()
     {
         CurHP = MaxHP;
+        startPos = transform.position;
     }
 
 

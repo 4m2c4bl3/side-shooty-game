@@ -15,10 +15,11 @@ public class Cam : MonoBehaviour {
 	Timer camProg = new Timer();
     public bool jumpin;
     public static Cam mainCam;
+    Timer resetCam = new Timer();
 	
 	//Camera.main.transform.localPosition = Camleft;
     // Camera.main.transform.localPosition = Camright;
-
+    
 	void Start()
 	{
         camLeft = new Vector3 (-camDef.x, camDef.y, camDef.z);
@@ -34,8 +35,8 @@ public class Cam : MonoBehaviour {
 
               if (launch)
               {
-                  endPoint.y = 4.6f - 3;
-                  startPoint.y = 4.6f - 3;
+                  endPoint.y = camDef.y - 3;
+                  startPoint.y = camDef.y - 3;
                   launch = false;
               }
 
@@ -47,19 +48,17 @@ public class Cam : MonoBehaviour {
 
           if (control.View == Vector3.left)
           {
+              startPoint.y = camDef.y - 3;
+              endPoint.y = camDef.y - 3;
               startPoint.x = camRight.x;
               endPoint.x = camLeft.x;
-              startPoint.y = 4.6f;
-              endPoint.y = 4.6f;
-
           }
           if (control.View == Vector3.right)
           {
+              startPoint.y = camDef.y - 3;
+              endPoint.y = camDef.y - 3;
               startPoint.x = camLeft.x;
               endPoint.x = camRight.x;
-              startPoint.y = 4.6f;
-              endPoint.y = 4.6f;
-
           }
 
           lastView = control.View;
@@ -71,20 +70,61 @@ public class Cam : MonoBehaviour {
           progress = 1;
       }
         }
+
+    void walking ()
+    {
+        if (lastView != control.View)
+        {
+            progress = 1 - progress;
+            startTime = Time.time;
+
+            if (control.View == Vector3.left)
+            {
+                startPoint = camRight;
+                endPoint = camLeft;
+            }
+
+            if (control.View == Vector3.right)
+            {
+                startPoint = camLeft;
+                endPoint = camRight;
+            }
+
+            lastView = control.View;
+        }
+        progress = camProg.progress(startTime, moveSpeed);
+        transform.localPosition = Vector3.Lerp(startPoint, endPoint, progress);
+        if (camProg.progress(startTime, moveSpeed) >= 1)
+        {
+            progress = 1;
+        }
+    }
         
  public void resetView ()
   {
+
       progress = 1 - progress;
       startTime = Time.time;
-      startPoint = Camera.main.transform.localPosition;
-      endPoint = startPoint;
-      endPoint.y = 4.6f;
+      if (control.View == Vector3.left)
+      {
+          startPoint.x = camLeft.x;
+          endPoint.y = camDef.y;
+          endPoint.x = camLeft.x;
+      }
+      if (control.View == Vector3.right)
+      {
+          startPoint.x = camRight.x;
+          endPoint.y = camDef.y;
+          endPoint.x = camRight.x;
+      }
       progress = camProg.progress(startTime, moveSpeed);
+      resetCam.setTimer(progress);
       transform.localPosition = Vector3.Lerp(startPoint,endPoint,progress);
      if (progress >= 1)
      {
          progress = 1;
      }
+  
   }
 
     void Update()
@@ -93,31 +133,14 @@ public class Cam : MonoBehaviour {
         {
             jumping();
         }
-
-		if (lastView != control.View)
+        if (jumpin == false)
         {
-            progress = 1 - progress;
-            startTime = Time.time;
+                walking();
 
-             if (control.View == Vector3.left)
-            {
-				startPoint.x = camRight.x;
-				endPoint.x = camLeft.x;
-            }
-
-            if (control.View == Vector3.right)
-             {
-				startPoint.x = camLeft.x;
-				endPoint.x = camRight.x;
-             }
-              
-                lastView = control.View;
+            
         }
-		progress = camProg.progress (startTime, moveSpeed);
-		transform.localPosition = Vector3.Lerp(startPoint, endPoint, progress);
-        if (camProg.progress(startTime, moveSpeed) >= 1)
-		{
-			progress = 1;
-		}
+       
+
+		
     }
 }
