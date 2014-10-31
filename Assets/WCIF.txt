@@ -1,0 +1,44 @@
+WHERE CAN I FIND __
+
+AI
+	Enemy movement.
+
+Attack
+	Bullet lifespan.
+
+Cam
+	Camera movement.
+
+Character
+	HP, lives, taking damage, death, respawning + changing scenes. This is used for the player + the enemies.
+
+Control
+	Creating + firing bullets (the cannon), character physics (all by maxime), some camera repositioning.
+
+Menu
+	Everything relating to the main menu and gameover menu.
+
+Platforms
+	Everything relating to the jumping platforms.
+
+PlayerGUI
+	Everything relating to the main game's GUI apart from the score because I'm dumb.
+
+PowerUp
+	Those little "+" boxes. How they work.
+
+Scores
+	Information that's passed on to the gameover screen, and the all important SCOOOREEEEE.
+
+Souls
+	Controls all the player and monster stats apart from HP. Defence, attack strength, etc.
+
+StartGame
+	All things that happen only once, at the start of each game.
+
+Teleport
+	Advancing to the next level, resetting player's starting position for respawn.
+
+Timer
+	Times stuff! Also used for lerp progress.
+

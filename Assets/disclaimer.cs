@@ -5,6 +5,6 @@ public class disclaimer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        guiText.text = "PS: I have no idea why jump and push back \nstrength varies so wildly from computer to \ncomputer. If you are jumping a million feet\nin the air, please accept my apolgies and liver.";
+        guiText.text = "The camera is still a work in progress so please \nforgive any headache induced from it, \nsoon it will be under my control. \nPS:If you are jumping a million feet\nin the air, please accept my apolgies and liver.";
 	}
 	}

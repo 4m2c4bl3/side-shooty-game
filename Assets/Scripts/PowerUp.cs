@@ -11,6 +11,8 @@ public class PowerUp : MonoBehaviour {
  	public bool hangTime;
 	public bool Power2;
 	public bool Power3;
+    float destTime = 2;
+    Timer destTimer = new Timer();
 
 	void Healrun ()
 	{
@@ -20,17 +22,41 @@ public class PowerUp : MonoBehaviour {
 		if (PlayerHP.CurHP >= PlayerHP.MaxHP) 
 		{
 			PlayerHP.CurHP = PlayerHP.MaxHP;
-				}
+				}   
 
+        destTimer.setTimer(destTime);
+        pausedDestroy();
 		}
+    void Update()
+    {
+        if (gameObject.collider.isTrigger == false)
+        {
+            pausedDestroy();
+        }
+    }
+    void pausedDestroy()
+    {
+     gameObject.collider.isTrigger = false;
+        if (destTimer.Ok())
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void OnGUI ()
+    {
+
+        GUI.Label(new Rect(0, 0, 64, 400), "Hold H to jump for longer");
+    }
 
 
 	void increaseSoulrun ()
 	{
 		//raise soul to specified level
 		Souls EquippedSoul = Player.GetComponent<Souls> ();
-		EquippedSoul.BroadcastMessage(increaseSoulname);
-		Destroy(gameObject);
+        EquippedSoul.BroadcastMessage(increaseSoulname);
+        destTimer.setTimer(destTime);
+        pausedDestroy();
 		}
 	void hangTimerun ()
 	{
@@ -38,19 +64,23 @@ public class PowerUp : MonoBehaviour {
         player.GetComponentInParent<Control>().hangYes = true;
 		//grants power 1
         Scores.mainScore.powerUps++;
-		Destroy(gameObject);
+        destTimer.setTimer(destTime);
+        pausedDestroy();
+		
 	}
 	void Power2run ()
 	{
 		//grants power 2
         Scores.mainScore.powerUps++;
-		Destroy(gameObject);
+        destTimer.setTimer(destTime);
+        pausedDestroy();
 	}
 	void Power3run ()
 	{
 		//grants power 3
         Scores.mainScore.powerUps++;
-		Destroy(gameObject);
+        destTimer.setTimer(destTime);
+        pausedDestroy();
 	}
 
     void OnTriggerEnter(Collider other)
@@ -78,7 +108,6 @@ public class PowerUp : MonoBehaviour {
 			{
 				Power3run();
 			}
-            Destroy(gameObject);
         }
 		}
 

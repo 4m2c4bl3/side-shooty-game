@@ -8,9 +8,40 @@ public class Character : MonoBehaviour {
     public Souls EquippedSoul;
     public float lives = 3;
     public Vector3 startPos;
+    public static bool _respawn;
     Timer animTimer = new Timer();
+    Timer transTimer = new Timer();
 
-    // Use this for initialization
+    bool respawn
+    {
+        get
+        {
+            return _respawn;
+        }
+        set
+        {
+            if (value)
+            {
+                if (_respawn != value)
+                {
+                    transTimer.setTimer(2);
+                    Control.mainControl.isControllable = false;
+                }
+                if (transTimer.Ok())
+                {
+                    lives -= 1;
+                    Scores.mainScore.livesLost++;
+                    CurHP = MaxHP;
+                    gameObject.GetComponent<Control>().movement = Vector3.zero;
+                    transform.position = startPos;
+                    Control.mainControl.isControllable = true;
+                    transTimer.sleep();
+                    respawn = false;
+                }
+            }
+            _respawn = value;
+        }
+    }
     void Start()
     {
         CurHP = MaxHP;
@@ -31,6 +62,11 @@ public class Character : MonoBehaviour {
 
     void Update()
     {
+        if (Scores.mainScore.completedMap == true && transTimer.Ok())
+        {
+            Application.LoadLevel("over");
+        }
+        
         if (animTimer.Ok())
         {
             if (gameObject.name == "FlyingEnemy" || gameObject.name == "Player")
@@ -50,15 +86,18 @@ public class Character : MonoBehaviour {
             
             if (gameObject.name == "Player")
             {
-                lives -= 1;
-                Scores.mainScore.livesLost ++;
-                CurHP = MaxHP;
-                transform.position = startPos;
-                gameObject.GetComponent<Control>().movement = Vector3.zero;
-
+                if (lives >= 1)
+                {
+                    respawn = true;
+                }
                 if (lives <= 0)
                 {
-                    Application.LoadLevel("over");
+                    transTimer.setTimer(1);
+                    if (transTimer.Ok())
+                    {
+                        Application.LoadLevel("over");
+                        transTimer.sleep();
+                    }
                 }
             }
             if (gameObject.tag == "Enemy")
@@ -67,13 +106,18 @@ public class Character : MonoBehaviour {
                 Scores.mainScore.enemiesKilled++;
             }
         }
+        
+        
     }
+
+    
     void OnTriggerEnter (Collider collision)
     {
         if (collision.gameObject.name == "LevelComplete" && gameObject.name == "Player")
         {
             Scores.mainScore.completedMap = true;
-            Application.LoadLevel("over");
+            Control.mainControl.isControllable = false;
+            transTimer.setTimer(1);
         }
     }
 

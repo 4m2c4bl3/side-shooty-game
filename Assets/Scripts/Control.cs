@@ -4,8 +4,8 @@ using System.Linq;
 
 public class Control : MonoBehaviour
 	
-	//I did not make the physics! Everything I did not do is in the 'by maxime' areas. If you guess who helped me with them, you win the game.
-    //
+	//I did not make the player movement physics! Maxime did the entire base, and I tweaked a few things that I a) could understand and b) wanted to change.
+    //If it looks complicated, it's not me.
 	
 {
     public bool isControllable = true;
@@ -16,8 +16,7 @@ public class Control : MonoBehaviour
 	public Vector3 View = new Vector3(1f, 0f, 0f);
     public bool hangYes = false;
 	float hangtime = 0.35f;
-	
-	//by maxime start
+		
 	float backforce = 0.0f;
 	float yforce = 0.0f;
 	bool hitback = false;
@@ -25,7 +24,7 @@ public class Control : MonoBehaviour
 	bool _grounded = false;
 	public Vector3 movement = Vector3.zero;
     public static Control mainControl;
-	//by maxime end
+	
 
     public bool grounded
     {
@@ -110,18 +109,16 @@ public class Control : MonoBehaviour
 		
         movement = Vector3.zero;
         if (isControllable)
-        //by maxime start
         { 
 		    if (MoveRight)
 		    {
 			    movement += Vector3.right * (grounded ? 1.0f : aircontrol);
-			    View = Vector3.right; //notbymaxime
-			
+			    View = Vector3.right;
 		    }
 		    if (MoveLeft)
 		    {
 			    movement += Vector3.left * (grounded ? 1.0f : aircontrol);
-			    View = Vector3.left;//notbymaxime
+			    View = Vector3.left;
 			
 		    }
 		    if (Jump && grounded == true)
@@ -267,5 +264,4 @@ public class Control : MonoBehaviour
             transform.parent = null;
         }
     }
-    //by maxime end
 }

@@ -11,10 +11,6 @@ public class Attack : MonoBehaviour
     public GameObject Shooter;
     public Vector3 dir;
 
-    void Start()
-    {
-
-    }
 
     void OnCollisionEnter (Collision hit)
     {
