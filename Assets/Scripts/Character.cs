@@ -50,8 +50,7 @@ public class Character : MonoBehaviour {
             if (gameObject.name == "Player")
             {
                 lives -= 1;
-                var scoreObj = GameObject.FindGameObjectWithTag("Score");
-                scoreObj.GetComponent<Scores>().livesLost ++;
+                Scores.mainScore.livesLost ++;
                 CurHP = MaxHP;
                 transform.position = startPos;
                 gameObject.GetComponent<Control>().movement = Vector3.zero;
@@ -64,8 +63,7 @@ public class Character : MonoBehaviour {
             if (gameObject.tag == "Enemy")
             {
                 Destroy(gameObject); 
-                var scoreObj = GameObject.FindGameObjectWithTag("Score");
-                scoreObj.GetComponent<Scores>().enemiesKilled++;
+                Scores.mainScore.enemiesKilled++;
             }
         }
     }
@@ -73,8 +71,7 @@ public class Character : MonoBehaviour {
     {
         if (collision.gameObject.name == "LevelComplete" && gameObject.name == "Player")
         {
-            var scoreOtron = GameObject.FindGameObjectWithTag("Score");
-            scoreOtron.GetComponent<Scores>().completedMap = true;
+            Scores.mainScore.completedMap = true;
             Application.LoadLevel("over");
         }
     }
@@ -84,9 +81,9 @@ public class Character : MonoBehaviour {
         if (gameObject.tag == "Enemy")
         {
             Attack enemyattack = collision.gameObject.GetComponent<Attack>();
-
             if (enemyattack != null)
             {
+                Scores.mainScore.sERIOUSsCORES();
                 animTimer.setTimer(0.1f);
                 if (gameObject.name != "FlyingEnemy")
                 {

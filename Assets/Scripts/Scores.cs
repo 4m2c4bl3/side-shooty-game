@@ -7,10 +7,12 @@ public class Scores : MonoBehaviour {
    public bool completedMap = false;
    public float powerUps = 0;
    int howgoodamiscoring = 1;
+   public static Scores mainScore;
   
     void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
+        mainScore = this;
     }
 
     public void sERIOUSsCORES() //i hope you enjoy my fully functioning and terribly important score system. thank you!

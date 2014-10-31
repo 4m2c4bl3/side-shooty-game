@@ -2,11 +2,14 @@
 using System.Collections;
 
 public class Teleport : MonoBehaviour {
+    public GameObject toset;
     Vector3 to;
     Timer jumpPause = new Timer();
     bool porting = false;
+
 	void Start () {
-        to = GameObject.Find("TeleTo").transform.position;
+
+        to = toset.transform.position;
 	}
 
     void OnTriggerEnter(Collider collision)

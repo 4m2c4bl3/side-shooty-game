@@ -14,7 +14,7 @@ public class Cam : MonoBehaviour {
 	Vector3 camRight;
 	Timer camProg = new Timer();
     public bool jumpin;
-    bool launch = true;
+    public static Cam mainCam;
 	
 	//Camera.main.transform.localPosition = Camleft;
     // Camera.main.transform.localPosition = Camright;
@@ -22,32 +22,70 @@ public class Cam : MonoBehaviour {
 	void Start()
 	{
         camLeft = new Vector3 (-camDef.x, camDef.y, camDef.z);
-        camRight = new Vector3(camDef.x, camDef.y, camDef.z);
+        camRight = new Vector3 (camDef.x, camDef.y, camDef.z);
         startPoint = camRight;
 		endPoint = camLeft;
+        mainCam = this;
 	}
 
     void jumping()
     {
-        
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<Control>().grounded == false && launch == true)
-        {
-            startPoint.y = 4.6f - 3;
-            endPoint.y = 4.6f - 3;
-            transform.position = new Vector3(transform.position.x, 4.6f - 3, transform.position.x);
-            launch = false; 
+        bool launch = true;
+
+              if (launch)
+              {
+                  endPoint.y = 4.6f - 3;
+                  startPoint.y = 4.6f - 3;
+                  launch = false;
+              }
+
+
+      if (lastView != control.View)
+      {
+          progress = 1 - progress;
+          startTime = Time.time;
+
+          if (control.View == Vector3.left)
+          {
+              startPoint.x = camRight.x;
+              endPoint.x = camLeft.x;
+              startPoint.y = 4.6f;
+              endPoint.y = 4.6f;
+
+          }
+          if (control.View == Vector3.right)
+          {
+              startPoint.x = camLeft.x;
+              endPoint.x = camRight.x;
+              startPoint.y = 4.6f;
+              endPoint.y = 4.6f;
+
+          }
+
+          lastView = control.View;
+      }
+      progress = camProg.progress(startTime, moveSpeed);
+      transform.localPosition = Vector3.Lerp(startPoint, endPoint, progress);
+      if (camProg.progress(startTime, moveSpeed) >= 1)
+      {
+          progress = 1;
+      }
         }
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<Control>().grounded == true)
-        {
-            startPoint.y = 4.6f;
-            endPoint.y = 4.6f;
-            transform.position = new Vector3(transform.position.x, 4.6f, transform.position.x);
-            jumpin = false;
-
-        } 
-  
-    }
-
+        
+ public void resetView ()
+  {
+      progress = 1 - progress;
+      startTime = Time.time;
+      startPoint = Camera.main.transform.localPosition;
+      endPoint = startPoint;
+      endPoint.y = 4.6f;
+      progress = camProg.progress(startTime, moveSpeed);
+      transform.localPosition = Vector3.Lerp(startPoint,endPoint,progress);
+     if (progress >= 1)
+     {
+         progress = 1;
+     }
+  }
 
     void Update()
     {
@@ -65,20 +103,19 @@ public class Cam : MonoBehaviour {
             {
 				startPoint.x = camRight.x;
 				endPoint.x = camLeft.x;
-                
             }
+
             if (control.View == Vector3.right)
              {
 				startPoint.x = camLeft.x;
 				endPoint.x = camRight.x;
-                
              }
               
                 lastView = control.View;
         }
 		progress = camProg.progress (startTime, moveSpeed);
 		transform.localPosition = Vector3.Lerp(startPoint, endPoint, progress);
-		if (camProg.progress(startTime, moveSpeed) >= 1)
+        if (camProg.progress(startTime, moveSpeed) >= 1)
 		{
 			progress = 1;
 		}

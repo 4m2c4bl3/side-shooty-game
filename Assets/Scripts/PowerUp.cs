@@ -37,22 +37,19 @@ public class PowerUp : MonoBehaviour {
         var player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponentInParent<Control>().hangYes = true;
 		//grants power 1
-		var scoreObj = GameObject.FindGameObjectWithTag("Score");
-		scoreObj.GetComponent<Scores>().powerUps++;
+        Scores.mainScore.powerUps++;
 		Destroy(gameObject);
 	}
 	void Power2run ()
 	{
 		//grants power 2
-		var scoreObj = GameObject.FindGameObjectWithTag("Score");
-		scoreObj.GetComponent<Scores>().powerUps++;
+        Scores.mainScore.powerUps++;
 		Destroy(gameObject);
 	}
 	void Power3run ()
 	{
 		//grants power 3
-		var scoreObj = GameObject.FindGameObjectWithTag("Score");
-		scoreObj.GetComponent<Scores>().powerUps++;
+        Scores.mainScore.powerUps++;
 		Destroy(gameObject);
 	}
 

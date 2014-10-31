@@ -22,16 +22,45 @@ public class Control : MonoBehaviour
 	float yforce = 0.0f;
 	bool hitback = false;
 	float aircontrol = 1.75f; //Change to control speed when in air
-	public bool grounded = false;
+	bool _grounded = false;
 	public Vector3 movement = Vector3.zero;
+    public static Control mainControl;
 	//by maxime end
+
+    public bool grounded
+    {
+        get
+        {
+            return _grounded;
+        }
+        set
+        {
+            if (!value)
+            {
+                transform.parent = null;
+                Cam.mainCam.jumpin = true;
+            }
+            if (value)
+            {
+                if (!_grounded)
+                {
+                    Cam.mainCam.jumpin = false;
+                    Cam.mainCam.resetView();
+                }
+            }
+            _grounded = value;
+        }
+    }
 	
-	
+	void Start()
+    {
+        mainControl = this;
+    }
+
 	public void Shoot()
 	{
 		if (EquippedSoul.Energy >= 0.0)
 		{
-            GameObject.FindGameObjectWithTag("Score").GetComponent<Scores>().sERIOUSsCORES();
 			Vector3 SpawnPoint = transform.position + (View * 1);
             SpawnPoint.y += 0.3f;
 			GameObject swing = Instantiate(BasicBullet.gameObject, SpawnPoint, transform.rotation) as GameObject;
@@ -97,10 +126,8 @@ public class Control : MonoBehaviour
 		    }
 		    if (Jump && grounded == true)
 		    {
-                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Cam>().jumpin = true;
 			    yforce = 4.5f; //Intial jump force
 			    grounded = false;
-                transform.parent = null;
 
 		    }
 
@@ -160,6 +187,26 @@ public class Control : MonoBehaviour
                 yforce = 0.0f;
             }
 		}
+        //if (collision.gameObject.name == "Border")
+       // {
+            //if (collision.contacts.All(x => x.normal == Vector3.left)) // liar there's no magic here
+           // {
+              //  if (movement.x <= -0.1f)
+              //  {
+              //      movement.x = 0;
+              //      backforce += 0.05f;
+              //  }
+               
+         //   }
+         //   if (collision.contacts.All(x => x.normal == Vector3.right)) // only the smell of failuuure
+         //   {
+         //       if (movement.x >= 0.1f)
+        //        {
+        //            movement.x = 0;
+        //            backforce += 0.05f;
+       //         }
+       //     }
+       // }
 		if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
 		{
             
@@ -169,12 +216,12 @@ public class Control : MonoBehaviour
 			
 			if (backforce > 0.0f)
 			{
-				backforce -= 0.35f; //Ascent slowdown rate
+				backforce -= 0.25f; //Ascent slowdown rate
 			}
 			else if (backforce > -1.5f)
 			{ 
 				//Max slowdown speed
-				backforce -= 0.75f; //Descent speedup rate
+				backforce -= 0.95f; //Descent speedup rate
 			}
 		}
 	}
@@ -196,6 +243,7 @@ public class Control : MonoBehaviour
         }
     }
 	
+
 	void OnCollisionExit(Collision collision)
 	{
         if (collision == null)

@@ -38,14 +38,13 @@ public class Menu : MonoBehaviour {
 	{
 		if (gameObject.name == "FinalScore")
 		{
-			var scoreData = GameObject.FindGameObjectWithTag("Score");
-			if (scoreData.gameObject.GetComponent<Scores>().completedMap == true)
+			if (Scores.mainScore.completedMap == true)
 			{
-				guiText.text = "You Won! \n You killed " + scoreData.gameObject.GetComponent<Scores>().enemiesKilled + " enemies.\n You died " + scoreData.gameObject.GetComponent<Scores>().livesLost + " times.";
+                guiText.text = "You Won! \n You killed " + Scores.mainScore.enemiesKilled + " enemies.\n You died " + Scores.mainScore.livesLost + " times.";
 			}
-			if (scoreData.gameObject.GetComponent<Scores>().completedMap == false)
+            if (Scores.mainScore.completedMap == false)
 			{
-				guiText.text = "You Lost. \n You killed " + scoreData.gameObject.GetComponent<Scores>().enemiesKilled + " enemies.\n You died " + scoreData.gameObject.GetComponent<Scores>().livesLost + " times.";
+                guiText.text = "You Lost. \n You killed " + Scores.mainScore.enemiesKilled + " enemies.\n You died " + Scores.mainScore.livesLost + " times.";
 			}
 
 		}
