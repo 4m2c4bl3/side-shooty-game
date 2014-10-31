@@ -5,7 +5,8 @@ public class Cam : MonoBehaviour {
     public Control control;
     float startTime;
     float progress = 1f;
-    public float moveSpeed = 0.2f;	
+    public float moveSpeed = 0.2f;
+    float resetSpeed = -2f;
     Vector3 startPoint;
     Vector3 endPoint;
     Vector3 lastView;
@@ -15,15 +16,14 @@ public class Cam : MonoBehaviour {
 	Timer camProg = new Timer();
     public bool jumpin;
     public static Cam mainCam;
-    Timer resetCam = new Timer();
+    float camOffset = 2;
+    bool resetting = false;
+    Timer resetProg = new Timer();
 	
-	//Camera.main.transform.localPosition = Camleft;
-    // Camera.main.transform.localPosition = Camright;
-    
 	void Start()
 	{
         camLeft = new Vector3 (-camDef.x, camDef.y, camDef.z);
-        camRight = new Vector3 (camDef.x, camDef.y, camDef.z);
+        camRight = new Vector3(camDef.x , camDef.y, camDef.z);
         startPoint = camRight;
 		endPoint = camLeft;
         mainCam = this;
@@ -35,8 +35,8 @@ public class Cam : MonoBehaviour {
 
               if (launch)
               {
-                  endPoint.y = camDef.y - 3;
-                  startPoint.y = camDef.y - 3;
+                  endPoint.y = camDef.y - camOffset;
+                  startPoint.y = camDef.y - camOffset;
                   launch = false;
               }
 
@@ -48,15 +48,15 @@ public class Cam : MonoBehaviour {
 
           if (control.View == Vector3.left)
           {
-              startPoint.y = camDef.y - 3;
-              endPoint.y = camDef.y - 3;
+              startPoint.y = camDef.y - camOffset;
+              endPoint.y = camDef.y - camOffset;
               startPoint.x = camRight.x;
               endPoint.x = camLeft.x;
           }
           if (control.View == Vector3.right)
           {
-              startPoint.y = camDef.y - 3;
-              endPoint.y = camDef.y - 3;
+              startPoint.y = camDef.y - camOffset;
+              endPoint.y = camDef.y - camOffset;
               startPoint.x = camLeft.x;
               endPoint.x = camRight.x;
           }
@@ -102,28 +102,28 @@ public class Cam : MonoBehaviour {
         
  public void resetView ()
   {
-
+      resetting = true;
       progress = 1 - progress;
       startTime = Time.time;
       if (control.View == Vector3.left)
       {
           startPoint.x = camLeft.x;
-          endPoint.y = camDef.y;
-          endPoint.x = camLeft.x;
+          endPoint = camLeft;
       }
       if (control.View == Vector3.right)
       {
           startPoint.x = camRight.x;
-          endPoint.y = camDef.y;
-          endPoint.x = camRight.x;
+          endPoint = camRight;
       }
-      progress = camProg.progress(startTime, moveSpeed);
-      resetCam.setTimer(progress);
+      progress = camProg.progress(startTime, resetSpeed); //i dont think this is doing anything at all. it's using movespeed not resetspeed, so clearly walking is being used. how i fix?
+      resetProg.setTimer(progress);
       transform.localPosition = Vector3.Lerp(startPoint,endPoint,progress);
      if (progress >= 1)
      {
          progress = 1;
+
      }
+
   
   }
 
@@ -135,9 +135,17 @@ public class Cam : MonoBehaviour {
         }
         if (jumpin == false)
         {
-                walking();
+            if (resetProg.Ok())
+            { 
+                resetting = false;
+                resetProg.sleep();
 
-            
+            }
+            if (resetting == false)
+            {
+                walking();
+            }
+                            
         }
        
 
