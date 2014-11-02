@@ -5,8 +5,7 @@ public class Cam : MonoBehaviour {
     public Control control;
     float startTime;
     float progress = 1f;
-    public float moveSpeed = 0.2f;
-    float resetSpeed = -2f;
+    public float moveSpeed = 0.09f;
     Vector3 startPoint;
     Vector3 endPoint;
     Vector3 lastView;
@@ -115,13 +114,14 @@ public class Cam : MonoBehaviour {
           startPoint.x = camRight.x;
           endPoint = camRight;
       }
-      progress = camProg.progress(startTime, resetSpeed); //i dont think this is doing anything at all. it's using movespeed not resetspeed, so clearly walking is being used. how i fix?
-      resetProg.setTimer(progress);
+      progress = camProg.progress(startTime, moveSpeed); //i dont think this is doing anything at all. it's using movespeed not resetspeed, so clearly walking is being used. how i fix?
       transform.localPosition = Vector3.Lerp(startPoint,endPoint,progress);
+      resetProg.setTimer(progress);
+      resetting = false;
      if (progress >= 1)
      {
          progress = 1;
-
+         
      }
 
   
@@ -135,16 +135,16 @@ public class Cam : MonoBehaviour {
         }
         if (jumpin == false)
         {
-            if (resetProg.Ok())
-            { 
-                resetting = false;
-                resetProg.sleep();
-
-            }
             if (resetting == false)
             {
                 walking();
             }
+            if (resetProg.Ok())
+            { 
+                resetProg.sleep();
+
+            }
+           
                             
         }
        

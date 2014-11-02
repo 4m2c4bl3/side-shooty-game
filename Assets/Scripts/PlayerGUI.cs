@@ -16,15 +16,15 @@ public class PlayerGUI : MonoBehaviour {
     void OnGUI()
     {
         GUI.Label(new Rect(1, 400, 55, 55), powerIcon);
-		GUI.BeginGroup (new Rect (1,0,64,(power)));
-		GUI.Label (new Rect (0,0,64,400), powerBoarder);
-		GUI.Label (new Rect (0,0,64,400), powerMeasure);
+		GUI.Label (new Rect (1,0,64,400), powerBoarder);
+		GUI.BeginGroup (new Rect (1,(1 + (388-power)),52,(power)));
+		GUI.Label (new Rect (0,0,52,400), powerMeasure);
 		GUI.EndGroup ();
 
         GUI.Label(new Rect((Screen.width - 50), 400, 55, 55), healthIcon);
-		GUI.BeginGroup (new Rect ((Screen.width-50),0,64,(life)));
-		GUI.Label (new Rect (0,0,64,400), healthBorder);
-		GUI.Label (new Rect (0,0,64,400), healthMeasure);
+        GUI.Label(new Rect((Screen.width - 50), 0, 64, 400), healthBorder);
+		GUI.BeginGroup (new Rect ((Screen.width-50),(1 + (388-life)),52,(life)));
+		GUI.Label (new Rect (0,0,52,400), healthMeasure);
 		GUI.EndGroup ();
 
         if (player.gameObject.GetComponent<Character>().lives == 3)
@@ -48,8 +48,8 @@ public class PlayerGUI : MonoBehaviour {
 	{
 		Character playerHP = player.gameObject.GetComponent<Character>();
 		Souls playerMP = player.gameObject.GetComponent<Souls>();
-		life = (playerHP.CurHP / playerHP.MaxHP) * 400;
-		power = (playerMP.Energy / playerMP.maxEnergy) * 400;
+		life = (playerHP.CurHP / playerHP.MaxHP) * 388;
+		power = (playerMP.Energy / playerMP.maxEnergy) * 388;
 
 	}
 

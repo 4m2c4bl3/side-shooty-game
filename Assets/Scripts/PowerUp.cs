@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PowerUp : MonoBehaviour {
 
-	public GameObject Player;
+    GameObject Player;
 	public bool Heal;
 	public int healAmount;
 	public bool increaseSoul;
@@ -13,6 +13,11 @@ public class PowerUp : MonoBehaviour {
 	public bool Power3;
     float destTime = 2;
     Timer destTimer = new Timer();
+
+    void Start()
+    {
+        Player = GameObject.FindGameObjectWithTag("Player");
+    }
 
 	void Healrun ()
 	{
@@ -43,11 +48,6 @@ public class PowerUp : MonoBehaviour {
         }
     }
 
-    void OnGUI ()
-    {
-
-        GUI.Label(new Rect(0, 0, 64, 400), "Hold H to jump for longer");
-    }
 
 
 	void increaseSoulrun ()
@@ -64,6 +64,7 @@ public class PowerUp : MonoBehaviour {
         player.GetComponentInParent<Control>().hangYes = true;
 		//grants power 1
         Scores.mainScore.powerUps++;
+        GetComponentInChildren<TextMesh>().text = "Hold H to jump longer.";
         destTimer.setTimer(destTime);
         pausedDestroy();
 		
