@@ -114,7 +114,7 @@ public class Cam : MonoBehaviour {
           startPoint.x = camRight.x;
           endPoint = camRight;
       }
-      progress = camProg.progress(startTime, moveSpeed); //i dont think this is doing anything at all. it's using movespeed not resetspeed, so clearly walking is being used. how i fix?
+      progress = camProg.progress(startTime, moveSpeed); 
       transform.localPosition = Vector3.Lerp(startPoint,endPoint,progress);
       resetProg.setTimer(progress);
       resetting = false;
