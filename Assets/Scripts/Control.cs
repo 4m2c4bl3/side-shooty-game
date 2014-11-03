@@ -185,27 +185,8 @@ public class Control : MonoBehaviour
                 yforce = 0.0f;
             }
 		}
-        //if (collision.gameObject.name == "Border")
-       // {
-            //if (collision.contacts.All(x => x.normal == Vector3.left)) // liar there's no magic here
-           // {
-              //  if (movement.x <= -0.1f)
-              //  {
-              //      movement.x = 0;
-              //      backforce += 0.05f;
-              //  }
-               
-         //   }
-         //   if (collision.contacts.All(x => x.normal == Vector3.right)) // only the smell of failuuure
-         //   {
-         //       if (movement.x >= 0.1f)
-        //        {
-        //            movement.x = 0;
-        //            backforce += 0.05f;
-       //         }
-       //     }
-       // }
-		if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
+
+		if (collision.gameObject.tag == "Enemy")
 		{
             
 			BroadcastMessage("GotHit", collision);
