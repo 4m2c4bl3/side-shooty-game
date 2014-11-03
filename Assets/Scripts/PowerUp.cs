@@ -22,7 +22,7 @@ public class PowerUp : MonoBehaviour {
 	void Healrun ()
 	{
 		//healin
-		Character PlayerHP = Player.GetComponent<Character> ();
+		Souls PlayerHP = Player.GetComponent<Souls> ();
 		PlayerHP.CurHP += healAmount;
 		if (PlayerHP.CurHP >= PlayerHP.MaxHP) 
 		{

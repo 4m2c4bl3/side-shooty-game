@@ -10,7 +10,7 @@ public class Control : MonoBehaviour
 {
     public bool isControllable = true;
 	public Attack BasicBullet;
-	public Souls EquippedSoul;
+    Souls equippedSoul;
 	//public float Shootrate = 0.5f;
 	//private float Pause = 0.0f;
 	public Vector3 View = new Vector3(1f, 0f, 0f);
@@ -53,22 +53,23 @@ public class Control : MonoBehaviour
 	
 	void Start()
     {
+        equippedSoul = gameObject.GetComponent<Souls>();
         mainControl = this;
     }
 
 	public void Shoot()
 	{
-		if (EquippedSoul.Energy >= 0.0)
+		if (equippedSoul.Energy >= 0.0)
 		{
 			Vector3 SpawnPoint = transform.position + (View * 1);
             SpawnPoint.y += 0.3f;
 			GameObject swing = Instantiate(BasicBullet.gameObject, SpawnPoint, transform.rotation) as GameObject;
 			Attack shooted = swing.GetComponent<Attack>();
 			shooted.dir = View;
-			shooted.Speed = EquippedSoul.Speed;
-			shooted.Strength = EquippedSoul.Strength;
+			shooted.Speed = equippedSoul.Speed;
+			shooted.Strength = equippedSoul.Strength;
 			shooted.Shooter = gameObject;
-			EquippedSoul.Energy -= EquippedSoul.useEnergy;
+			equippedSoul.Energy -= equippedSoul.useEnergy;
 			Physics.IgnoreCollision(shooted.collider, collider);
 		}
 		
@@ -91,7 +92,7 @@ public class Control : MonoBehaviour
 	void Update()
 	{
         rigidbody.sleepVelocity = 0;
-		//Shootrate = EquippedSoul.AttSpeed;
+		//Shootrate = equippedSoul.AttSpeed;
 		bool ShootNow = Input.GetKeyDown(KeyCode.Space) /*&& Shootpause()*/;
 		if (isControllable)
         { 

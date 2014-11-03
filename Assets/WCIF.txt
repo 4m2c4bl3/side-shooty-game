@@ -1,7 +1,7 @@
 WHERE CAN I FIND __
 
 AI
-	Enemy movement.
+	Enemy movement, taking damage, death, etc.
 
 Attack
 	Bullet lifespan.
@@ -10,7 +10,7 @@ Cam
 	Camera movement.
 
 Character
-	HP, lives, taking damage, death, respawning + changing scenes. This is used for the player + the enemies.
+	Player lives, taking damage, death, respawning + changing scenes.
 
 Control
 	Creating + firing bullets (the cannon), character physics (all by maxime), some camera repositioning.
@@ -31,13 +31,13 @@ Scores
 	Information that's passed on to the gameover screen, and the all important SCOOOREEEEE.
 
 Souls
-	Controls all the player and monster stats apart from HP. Defence, attack strength, etc.
+	Controls all the player and monster stats, hit points, energy. 
 
 StartGame
-	All things that happen only once, at the start of each game.
+	All things that happen only once, at the start of each game, that don't belong anywhere else.
 
 Teleport
-	Advancing to the next level, resetting player's starting position for respawn.
+	Advancing to the next area, resetting player's starting position for respawn.
 
 Timer
 	Times stuff! Also used for lerp progress.

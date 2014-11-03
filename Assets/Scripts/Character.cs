@@ -3,9 +3,7 @@ using System.Collections;
 
 public class Character : MonoBehaviour {
 
-    public float MaxHP = 5f;
-    public float CurHP = 0f;
-    public Souls EquippedSoul;
+    Souls equippedSoul;
     public float lives = 3;
     public Vector3 startPos;
     public static bool _respawn;
@@ -31,7 +29,7 @@ public class Character : MonoBehaviour {
                 {
                     lives -= 1;
                     Scores.mainScore.livesLost++;
-                    CurHP = MaxHP;
+                    equippedSoul.CurHP = equippedSoul.MaxHP;
                     gameObject.GetComponent<Control>().movement = Vector3.zero;
                     transform.position = startPos;
                     Control.mainControl.isControllable = true;
@@ -44,19 +42,20 @@ public class Character : MonoBehaviour {
     }
     void Start()
     {
-        CurHP = MaxHP;
+        equippedSoul = gameObject.GetComponent<Souls>();
+        equippedSoul.CurHP = equippedSoul.MaxHP;
         startPos = transform.position;
     }
 
 
     void Damaged(int Power)
     {
-        if (EquippedSoul.Defence < Power)
-        { CurHP -= Power - EquippedSoul.Defence; }
+        if (equippedSoul.Defence < Power)
+        {equippedSoul.CurHP -= Power - equippedSoul.Defence; }
     }
 	public void pureDamaged(int Power)
 	{
-		CurHP -= Power;
+        equippedSoul.CurHP -= Power;
 
 	}
 
@@ -69,23 +68,14 @@ public class Character : MonoBehaviour {
         
         if (animTimer.Ok())
         {
-            if (gameObject.name == "FlyingEnemy" || gameObject.name == "Player")
-            {
                 Renderer renderKid = GetComponentInChildren<Renderer>();
                 renderKid.material.color = Color.white;
-            }
-
-            else
-            {
-                renderer.material.color = Color.white;
-            }
+ 
         }
-        if (CurHP <= 0)
+        if (equippedSoul.CurHP <= 0)
         { 
            // Destroy(gameObject); 
-            
-            if (gameObject.name == "Player")
-            {
+ 
                 if (lives >= 1)
                 {
                     respawn = true;
@@ -99,12 +89,6 @@ public class Character : MonoBehaviour {
                         transTimer.sleep();
                     }
                 }
-            }
-            if (gameObject.tag == "Enemy")
-            {
-                Destroy(gameObject); 
-                Scores.mainScore.enemiesKilled++;
-            }
         }
         
         
@@ -113,7 +97,7 @@ public class Character : MonoBehaviour {
     
     void OnTriggerEnter (Collider collision)
     {
-        if (collision.gameObject.name == "LevelComplete" && gameObject.name == "Player")
+        if (collision.gameObject.name == "LevelComplete")
         {
             Scores.mainScore.completedMap = true;
             Control.mainControl.isControllable = false;
@@ -121,27 +105,7 @@ public class Character : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter (Collision collision)
-    {
-        if (gameObject.tag == "Enemy")
-        {
-            Attack enemyattack = collision.gameObject.GetComponent<Attack>();
-            if (enemyattack != null)
-            {
-                Scores.mainScore.sERIOUSsCORES();
-                animTimer.setTimer(0.1f);
-                if (gameObject.name != "FlyingEnemy")
-                {
-                    renderer.material.color = Color.red;
-                }
-                Renderer renderKid = GetComponentInChildren<Renderer>();
-                renderKid.material.color = Color.red;
-                Damaged(enemyattack.Strength);
-
-            }
-        }
-    }
-
+ 
     void GotHit (Collision collision)
     {
         Attack enemyattack = collision.gameObject.GetComponent<Attack>();

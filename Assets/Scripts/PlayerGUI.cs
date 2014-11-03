@@ -46,10 +46,10 @@ public class PlayerGUI : MonoBehaviour {
 
 	void Update()
 	{
-		Character playerHP = player.gameObject.GetComponent<Character>();
-		Souls playerMP = player.gameObject.GetComponent<Souls>();
-		life = (playerHP.CurHP / playerHP.MaxHP) * 388;
-		power = (playerMP.Energy / playerMP.maxEnergy) * 388;
+		
+		Souls playerStats = player.gameObject.GetComponent<Souls>();
+		life = (playerStats.CurHP / playerStats.MaxHP) * 388;
+		power = (playerStats.Energy / playerStats.maxEnergy) * 388;
 
 	}
 

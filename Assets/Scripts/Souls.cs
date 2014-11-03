@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Souls : MonoBehaviour {
 
+    public float MaxHP = 5f;
+    public float CurHP = 0f;
     public int Strength = 1;
     public int Defence = 1;
     public int Speed = 1;
