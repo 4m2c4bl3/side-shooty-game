@@ -18,7 +18,6 @@ public class AI : MonoBehaviour {
     bool isFlying;
     public bool isHeavy;
 
-
     Vector3 View
     {
 
@@ -56,7 +55,7 @@ public class AI : MonoBehaviour {
         {
             isHeavy = true;
             equippedSoul.MaxHP = 1;
-            Heavy(1);
+            Heavy();
         }
         equippedSoul.CurHP = equippedSoul.MaxHP;
         if (isFlying)
@@ -67,10 +66,11 @@ public class AI : MonoBehaviour {
             startTime = Time.time;
         }
     }
-    void Heavy (int stageInput)
+    void Heavy ()
     {
             GameObject shield = GameObject.CreatePrimitive(PrimitiveType.Cube);
             shield.transform.position = new Vector3(transform.position.x + View.x, transform.position.y, transform.position.z);
+            shield.collider.enabled = false; 
             shield.transform.parent = gameObject.transform;
     }
 
@@ -78,12 +78,8 @@ public class AI : MonoBehaviour {
 	{
         if (!isFlying)
         { 
-    		transform.Translate(View * Speed * Time.deltaTime);
+    		transform.Translate(View * Speed * Time.deltaTime, Space.World);
         
-            if (isHeavy)
-            {
-                Heavy(2);
-            }
         }
         if (isFlying)
         {
@@ -115,11 +111,9 @@ public class AI : MonoBehaviour {
 	void OnTriggerEnter (Collider other)
 	{
 
-        Debug.Log("What the literal fuck");
         if (other.tag == "EnemyBoundary" && !isFlying) 
 		{
-			View = -View;
-
+            View = -View;
 				}
 	}
 
