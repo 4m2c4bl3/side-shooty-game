@@ -6,8 +6,7 @@ public class AIphysics : MonoBehaviour {
 
     float backforce = 0.0f;
     float yforce = 0.0f;
-    bool hitback = false;
-    float aircontrol = 1.75f; 
+    bool hitback = false; 
     bool grounded = false;
     public Vector3 movement = Vector3.zero;
 

@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class Cam : MonoBehaviour {
-    public Control control;
     float startTime;
     float progress = 1f;
     public float moveSpeed = 0.09f;
@@ -40,19 +39,19 @@ public class Cam : MonoBehaviour {
               }
 
 
-      if (lastView != control.View)
+      if (lastView != Control.mainControl.View)
       {
           progress = 1 - progress;
           startTime = Time.time;
 
-          if (control.View == Vector3.left)
+          if (Control.mainControl.View == Vector3.left)
           {
               startPoint.y = camDef.y - camOffset;
               endPoint.y = camDef.y - camOffset;
               startPoint.x = camRight.x;
               endPoint.x = camLeft.x;
           }
-          if (control.View == Vector3.right)
+          if (Control.mainControl.View == Vector3.right)
           {
               startPoint.y = camDef.y - camOffset;
               endPoint.y = camDef.y - camOffset;
@@ -60,7 +59,7 @@ public class Cam : MonoBehaviour {
               endPoint.x = camRight.x;
           }
 
-          lastView = control.View;
+          lastView = Control.mainControl.View;
       }
       progress = camProg.progress(startTime, moveSpeed);
       transform.localPosition = Vector3.Lerp(startPoint, endPoint, progress);
@@ -72,24 +71,24 @@ public class Cam : MonoBehaviour {
 
     void walking ()
     {
-        if (lastView != control.View)
+        if (lastView != Control.mainControl.View)
         {
             progress = 1 - progress;
             startTime = Time.time;
 
-            if (control.View == Vector3.left)
+            if (Control.mainControl.View == Vector3.left)
             {
                 startPoint = camRight;
                 endPoint = camLeft;
             }
 
-            if (control.View == Vector3.right)
+            if (Control.mainControl.View == Vector3.right)
             {
                 startPoint = camLeft;
                 endPoint = camRight;
             }
 
-            lastView = control.View;
+            lastView = Control.mainControl.View;
         }
         progress = camProg.progress(startTime, moveSpeed);
         transform.localPosition = Vector3.Lerp(startPoint, endPoint, progress);
@@ -104,12 +103,12 @@ public class Cam : MonoBehaviour {
       resetting = true;
       progress = 1 - progress;
       startTime = Time.time;
-      if (control.View == Vector3.left)
+      if (Control.mainControl.View == Vector3.left)
       {
           startPoint.x = camLeft.x;
           endPoint = camLeft;
       }
-      if (control.View == Vector3.right)
+      if (Control.mainControl.View == Vector3.right)
       {
           startPoint.x = camRight.x;
           endPoint = camRight;

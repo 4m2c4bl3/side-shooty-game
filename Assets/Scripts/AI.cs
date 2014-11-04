@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AI : MonoBehaviour {
 
-	Vector3 View = new Vector3 (1f, 0f, 0f);
+	Vector3 _view = new Vector3 (1f, 0f, 0f);
 	public float Speed = 10.0f;
     Vector3 startPos;
     Vector3 endPos;
@@ -16,7 +16,28 @@ public class AI : MonoBehaviour {
     Souls equippedSoul;
     bool isBasic;
     bool isFlying;
-    bool isHeavy;
+    public bool isHeavy;
+
+
+    Vector3 View
+    {
+
+        get
+        {
+            return _view;
+        }
+
+        set
+        {
+            if (_view != value)
+            {
+                transform.Rotate(new Vector3(0, 180, 0));
+            }
+
+            _view = value;
+        }
+
+    }
 
     void Start ()
     {
@@ -35,6 +56,7 @@ public class AI : MonoBehaviour {
         {
             isHeavy = true;
             equippedSoul.MaxHP = 1;
+            Heavy(1);
         }
         equippedSoul.CurHP = equippedSoul.MaxHP;
         if (isFlying)
@@ -45,14 +67,23 @@ public class AI : MonoBehaviour {
             startTime = Time.time;
         }
     }
+    void Heavy (int stageInput)
+    {
+            GameObject shield = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            shield.transform.position = new Vector3(transform.position.x + View.x, transform.position.y, transform.position.z);
+            shield.transform.parent = gameObject.transform;
+    }
 
 	void Update ()
 	{
-        if (isBasic)
+        if (!isFlying)
         { 
-
     		transform.Translate(View * Speed * Time.deltaTime);
-    
+        
+            if (isHeavy)
+            {
+                Heavy(2);
+            }
         }
         if (isFlying)
         {
@@ -84,6 +115,7 @@ public class AI : MonoBehaviour {
 	void OnTriggerEnter (Collider other)
 	{
 
+        Debug.Log("What the literal fuck");
         if (other.tag == "EnemyBoundary" && !isFlying) 
 		{
 			View = -View;
@@ -97,14 +129,32 @@ public class AI : MonoBehaviour {
             if (enemyattack != null)
             {
                 Scores.mainScore.sERIOUSsCORES();
-                animTimer.setTimer(0.1f);
-                if (!isFlying)
+
+                if (isFlying)
                 {
-                    renderer.material.color = Color.red;
+                    Damaged(enemyattack.Strength);
+                    Renderer renderKid = GetComponentInChildren<Renderer>();
+                    renderKid.material.color = Color.red;
+                    animTimer.setTimer(0.1f);
                 }
-                Renderer renderKid = GetComponentInChildren<Renderer>();
-                renderKid.material.color = Color.red;
-                Damaged(enemyattack.Strength);
+                
+                
+                if (isHeavy)
+                {
+                    if (View == Control.mainControl.View)
+                    {
+                        Damaged(enemyattack.Strength);
+                        renderer.material.color = Color.red;
+                        animTimer.setTimer(0.1f);
+                    }
+                }
+                
+                if (isBasic)
+                {
+                    Damaged(enemyattack.Strength);
+                    renderer.material.color = Color.red;
+                    animTimer.setTimer(0.1f);
+                }
 
             }
     }
