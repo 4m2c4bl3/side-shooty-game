@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class Souls : MonoBehaviour {
 
     public float MaxHP = 5f;

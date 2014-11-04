@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class Character : MonoBehaviour {
 
     Souls equippedSoul;
@@ -9,6 +10,7 @@ public class Character : MonoBehaviour {
     public static bool _respawn;
     Timer animTimer = new Timer();
     Timer transTimer = new Timer();
+    public static Character mainChar;
 
     bool respawn
     {
@@ -40,11 +42,15 @@ public class Character : MonoBehaviour {
             _respawn = value;
         }
     }
+
     void Start()
     {
+
+        DontDestroyOnLoad(transform.gameObject); 
         equippedSoul = gameObject.GetComponent<Souls>();
         equippedSoul.CurHP = equippedSoul.MaxHP;
         startPos = transform.position;
+        mainChar = this;
     }
 
 

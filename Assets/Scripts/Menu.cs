@@ -29,7 +29,12 @@ public class Menu : MonoBehaviour {
         if (gameObject.name == "Start" || gameObject.name == "Reload")
         {
             Application.LoadLevel("game");
+            Game.current = new Game();
         }
+
+        //for continue
+        //saveGame.Load();
+
 
         if (gameObject.name == "Quit")
         {

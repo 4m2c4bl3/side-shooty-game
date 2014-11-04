@@ -14,7 +14,7 @@ public class StartGame : MonoBehaviour {
 		Souls EquippedSoul = Player.GetComponent<Souls> ();
 		EquippedSoul.BroadcastMessage("BaseSoul");
         EquippedSoul.Energy = 1;
-        Player.GetComponent<Character>().startPos = Player.transform.position;
+        //Player.GetComponent<Character>().startPos = Player.transform.position;
         countDown.setTimer(2);
 	}
 

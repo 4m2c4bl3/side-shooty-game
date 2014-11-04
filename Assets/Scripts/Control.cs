@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 
+[System.Serializable]
 public class Control : MonoBehaviour
 	
 	//I did not make the player movement physics! Maxime did the entire base, and I tweaked a few things that I a) could understand and b) wanted to change.

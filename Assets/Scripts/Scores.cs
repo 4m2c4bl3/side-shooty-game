@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class Scores : MonoBehaviour {
    public float livesLost = 0;
    public float enemiesKilled = 0;

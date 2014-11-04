@@ -74,38 +74,50 @@ public class AI : MonoBehaviour {
             shield.transform.parent = gameObject.transform;
     }
 
-	void Update ()
-	{
-        if (!isFlying)
-        { 
-    		transform.Translate(View * Speed * Time.deltaTime, Space.World);
-        
-        }
-        if (isFlying)
-        {
-            lerpFly();
-        }
-
-        if (animTimer.Ok())
-        {
-            if (isFlying)
-            {
-                Renderer renderKid = GetComponentInChildren<Renderer>();
-                renderKid.material.color = Color.white;
-            }
-
-            else
-            {
-                renderer.material.color = Color.white;
-            }
-        }
-
+    void Update()
+    {
         if (equippedSoul.CurHP <= 0)
         {
+            if (!isFlying)
+            {
+                renderer.material.color = Color.red;
+            }
+            else
+            {
+
+                Renderer renderKid = GetComponentInChildren<Renderer>();
+                renderKid.material.color = Color.red;
+            }
+
             Destroy(gameObject);
             Scores.mainScore.enemiesKilled++;
         }
-	}
+        if (!isFlying)
+        {
+            transform.Translate(View * Speed * Time.deltaTime, Space.World);
+
+        }
+            if (isFlying)
+            {
+                lerpFly();
+            }
+
+            if (animTimer.Ok())
+            {
+                if (isFlying)
+                {
+                    Renderer renderKid = GetComponentInChildren<Renderer>();
+                    renderKid.material.color = Color.white;
+                }
+
+                else
+                {
+                    renderer.material.color = Color.white;
+                }
+            }
+
+        }
+  
 
 
 	void OnTriggerEnter (Collider other)
