@@ -6,7 +6,7 @@ public class newCam : MonoBehaviour {
    public static newCam main;
    public Vector3 ceiling;
    public Vector3 floor;
-   float ceilingOffset = 4f;
+   float ceilingOffset = 2f;
    Vector3 leftView = new Vector3(-1, 0, 0);
    Vector3 rightView = new Vector3(1, 0, 0);
    Vector3 upView = new Vector3(0, 1, 0);
