@@ -7,18 +7,23 @@ public class newCam : MonoBehaviour {
    public Vector3 ceiling;
    public Vector3 floor;
    float ceilingOffset = 2f;
-   Vector3 leftView = new Vector3(-1, 0, 0);
-   Vector3 rightView = new Vector3(1, 0, 0);
-   Vector3 upView = new Vector3(0, 1, 0);
-   Vector3 middleView = new Vector3(0, 0, 0);
+   Vector3 toView = new Vector3(0, 1, 0);
+   Timer holdTimer = new Timer();
+   float camx;
+
+    void Awake()
+   {
+       main = this;
+   }
 
     void Start ()
     {
-        main = this;
         ceiling = gameObject.transform.position;
         ceiling.y = newcamChar.main.gameObject.transform.position.y + ceilingOffset;
         floor = gameObject.transform.position;
         floor.y = newcamChar.main.gameObject.transform.position.y;
+        camx = gameObject.transform.position.x;
+        
     }
 
     void OnDrawGizmos ()
@@ -32,30 +37,48 @@ public class newCam : MonoBehaviour {
 
     public void reset (Vector3 playerpos)
     {
-        ceiling = new Vector3(gameObject.transform.position.x, (playerpos.y + ceilingOffset), gameObject.transform.position.x);
-        floor = new Vector3(gameObject.transform.position.x, (playerpos.y - 1), gameObject.transform.position.x);
+        ceiling = new Vector3(gameObject.transform.position.x, (playerpos.y + ceilingOffset), 0);
+        floor = new Vector3(gameObject.transform.position.x, (playerpos.y - 1), 0);
     }
 
     void Update ()
     {
 
-        floor = new Vector3(gameObject.transform.position.x, (newcamChar.main.gameObject.transform.position.y - 1), gameObject.transform.position.x);
+        floor = new Vector3(gameObject.transform.position.x, (newcamChar.main.gameObject.transform.position.y - 1), 0);
+        float playerx = newcamChar.main.gameObject.transform.position.x;
+        
+
+        //if (newcamChar.main.moveLeft)
+        //{
+        //    toView.y = newcamChar.main.gameObject.transform.position.y;       
+        //    toView.x = (-camx + -1);
+        //    transform.Translate(toView * 0.5f * Time.deltaTime);
+        //}
+//
+        //if (newcamChar.main.moveRight)
+        //{
+       //     toView.y = newcamChar.main.gameObject.transform.position.y;     
+       //     toView.x = (camx + 1);
+       //     transform.Translate(toView * 0.5f * Time.deltaTime);
+       // }
+
 
         if (newcamChar.main.gameObject.transform.position.y > ceiling.y)
         {
-            upView = new Vector3 (0, newcamChar.main.gameObject.transform.position.y, 0);
-            transform.Translate(upView * 0.5f * Time.deltaTime);
+            toView.y = newcamChar.main.gameObject.transform.position.y;
+            toView.z = 0;
+            transform.Translate(toView * 0.5f * Time.deltaTime);
         }
             
-
-        else
+         else
         {
             if (gameObject.transform.position.y > (floor.y + 6))
             {
-                upView = new Vector3(0, newcamChar.main.gameObject.transform.position.y, 0);
+                toView.y = newcamChar.main.gameObject.transform.position.y;
+                toView.z = 0;
                 transform.Translate(floor * 1 * Time.deltaTime);
+         }
 
             }
         }
-    }
 }

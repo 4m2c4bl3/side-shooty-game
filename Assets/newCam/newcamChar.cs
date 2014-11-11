@@ -8,7 +8,11 @@ public class newcamChar : MonoBehaviour
     float speed = 10.0f;
     float jumpHeight = 20.0f;
     bool _grounded;
+    public bool moveLeft;
+    public bool moveRight;
     public static newcamChar main;
+
+
 
     public bool grounded
     {
@@ -31,21 +35,22 @@ public class newcamChar : MonoBehaviour
     }
 
 
-    void Start()
+    void Awake()
     {
         main = this;
     }
+
     void Update()
     {
 
+        moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
+        moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
         bool jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-        bool moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
-        bool moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
 
         if (moveLeft)
         {
             transform.Translate(view * speed * Time.deltaTime, Space.World);
-
+            
             if (view == viewFront)
             {
                 view = -viewFront;
@@ -56,6 +61,7 @@ public class newcamChar : MonoBehaviour
         if (moveRight)
         {
             transform.Translate(view * speed * Time.deltaTime, Space.World);
+
 
             if (view != viewFront)
             {
