@@ -25,6 +25,7 @@ public class Platforms : MonoBehaviour {
 	Timer waitTimer = new Timer();
 	Timer moveProg = new Timer();
     Renderer childRenderer;
+    public Color wood;
 
 	// Use this for initialization
 	void Start () {
@@ -128,11 +129,9 @@ public class Platforms : MonoBehaviour {
 
 	void floorDamage (int strength)
 	{
-
 		waitTimer.setTimer(damageSpeed);
 		var player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<Character>().pureDamaged(strength);
-
 		}
 
     void OnTriggerExit(Collider collisionInfo)
@@ -152,12 +151,12 @@ public class Platforms : MonoBehaviour {
 
         if (stage == 0)
         {
-            childRenderer.material.color = Color.red;
-            renderer.material.color = Color.white;
+            childRenderer.material.color = wood;
+            renderer.material.color = wood;
         }
         else if (stage == 1)
         {
-            childRenderer.material.color = Color.red;
+            childRenderer.material.color = Color.yellow;
             renderer.material.color = Color.yellow;
         }
         else if (stage == 2)
