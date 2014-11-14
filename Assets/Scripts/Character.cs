@@ -56,7 +56,7 @@ public class Character : MonoBehaviour {
 
     void Damaged(int Power)
     {
-        if (equippedSoul.Defence < Power)
+        if (equippedSoul.Defence < Power && !Control.mainControl.defending)
         {equippedSoul.CurHP -= Power - equippedSoul.Defence; }
     }
 	public void pureDamaged(int Power)
@@ -95,11 +95,8 @@ public class Character : MonoBehaviour {
                         transTimer.sleep();
                     }
                 }
-        }
-        
-        
+        }               
     }
-
     
     void OnTriggerEnter (Collider collision)
     {
@@ -110,7 +107,6 @@ public class Character : MonoBehaviour {
             transTimer.setTimer(1);
         }
     }
-
  
     void GotHit (Collision collision)
     {
@@ -120,7 +116,7 @@ public class Character : MonoBehaviour {
         {
             Damaged(enemyattack.Strength);
         }
-        if (collision.gameObject.tag == "Enemy" && gameObject.name == "Player")
+        if (collision.gameObject.tag == "Enemy")
         {
             Damaged(collision.gameObject.GetComponent<Souls>().Strength);
             animTimer.setTimer(0.1f);

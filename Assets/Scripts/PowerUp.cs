@@ -64,7 +64,7 @@ public class PowerUp : MonoBehaviour {
         player.GetComponentInParent<Control>().hangYes = true;
 		//grants power 1
         Scores.mainScore.powerUps++;
-        GetComponentInChildren<TextMesh>().text = "Hold H to jump longer.";
+        GetComponentInChildren<TextMesh>().text = "Hold K to jump longer.";
         destTimer.setTimer(destTime);
         pausedDestroy();
 		

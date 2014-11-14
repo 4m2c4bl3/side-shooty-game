@@ -12,21 +12,27 @@ public class PlayerGUI : MonoBehaviour {
 	public float power = 1.0f;
 	public float life = 1.0f;
 	public GameObject player;
-	
+    public Color energy;
+    public Color health;
+    public Color lives;
     void OnGUI()
     {
+        GUI.Label(new Rect(1, 0, 64, 400), powerBoarder);
+        GUI.color = energy; 
         GUI.Label(new Rect(1, 400, 55, 55), powerIcon);
-		GUI.Label (new Rect (1,0,64,400), powerBoarder);
 		GUI.BeginGroup (new Rect (1,(1 + (388-power)),52,(power)));
-		GUI.Label (new Rect (0,0,52,400), powerMeasure);
+        GUI.Label (new Rect (0,0,52,400), powerMeasure);
+        GUI.color = Color.white;
 		GUI.EndGroup ();
 
-        GUI.Label(new Rect((Screen.width - 50), 400, 55, 55), healthIcon);
         GUI.Label(new Rect((Screen.width - 50), 0, 64, 400), healthBorder);
+        GUI.color = health; 
+        GUI.Label(new Rect((Screen.width - 50), 400, 55, 55), healthIcon);               
 		GUI.BeginGroup (new Rect ((Screen.width-50),(1 + (388-life)),52,(life)));
-		GUI.Label (new Rect (0,0,52,400), healthMeasure);
+        GUI.Label (new Rect (0,0,52,400), healthMeasure);
+        GUI.color = Color.white;
 		GUI.EndGroup ();
-
+        GUI.color = lives;
         if (player.gameObject.GetComponent<Character>().lives == 3)
         {
             GUI.Label(new Rect((Screen.width / 2) - 55, 0, 55, 55), livesIcon);
@@ -42,6 +48,7 @@ public class PlayerGUI : MonoBehaviour {
         {
             GUI.Label(new Rect((Screen.width / 2) - 55, 0, 55, 55), livesIcon);
         }
+        GUI.color = Color.white;
 	}
 
 	void Update()

@@ -17,15 +17,44 @@ public class Control : MonoBehaviour
 	public Vector3 View = new Vector3(1f, 0f, 0f);
     public bool hangYes = false;
 	float hangtime = 0.35f;
-		
 	float backforce = 0.0f;
 	float yforce = 0.0f;
 	bool hitback = false;
 	float aircontrol = 1.75f; //Change to control speed when in air
 	bool _grounded = false;
+    bool _defending = false;
 	public Vector3 movement = Vector3.zero;
     public static Control mainControl;
 	
+    public bool defending
+    {
+        get
+        {
+            return _defending;
+        }
+
+        set
+        {
+            if (value)
+            {
+                print("i'm a giant fatass");
+                if (!_defending)
+                {
+                    isControllable = false;
+                }
+            }
+
+            if (!value)
+            {
+                print("and i smell like shit");
+                if (_defending)
+                {
+                  isControllable = true;
+              }
+            }
+            _defending = value;
+        }
+    }
 
     public bool grounded
     {
@@ -106,10 +135,21 @@ public class Control : MonoBehaviour
         bool MoveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool MoveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
         bool Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-        bool Hang = Input.GetKey(KeyCode.H);
-
-		
+        bool Hang = Input.GetKey(KeyCode.K);
+        defending = Input.GetKey(KeyCode.L);	
         movement = Vector3.zero;
+
+        if (!isControllable && defending)
+        {
+            if (MoveRight)
+            {
+                View = Vector3.right;
+            }
+            if (MoveLeft)
+            {
+                View = Vector3.left;
+            }
+        }
         if (isControllable)
         { 
 		    if (MoveRight)
@@ -129,7 +169,7 @@ public class Control : MonoBehaviour
 			    grounded = false;
 
 		    }
-
+        }
             if (Hang && hangYes)
             {
                 hangtime = 0.05f;
@@ -139,7 +179,7 @@ public class Control : MonoBehaviour
             {
                 hangtime = 0.35f;
             }
-          }
+          
 		movement.y = yforce;
 		
 		if (hitback) 
