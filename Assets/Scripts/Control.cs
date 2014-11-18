@@ -37,7 +37,6 @@ public class Control : MonoBehaviour
         {
             if (value)
             {
-                print("i'm a giant fatass");
                 if (!_defending)
                 {
                     isControllable = false;
@@ -46,7 +45,6 @@ public class Control : MonoBehaviour
 
             if (!value)
             {
-                print("and i smell like shit");
                 if (_defending)
                 {
                   isControllable = true;
@@ -184,8 +182,19 @@ public class Control : MonoBehaviour
 		
 		if (hitback) 
 		{
-			movement.x = backforce; 
-			
+
+            if (backforce <= -1.5f)
+            {
+                //Max slowdown speed
+                backforce += 0.95f; //Descent speedup rate
+            }
+
+            else if (backforce <= 0.0f)
+            {
+                backforce += 0.25f; //Ascent slowdown rate
+            }
+
+			movement.x = backforce; 			
 		}
 
         if (grounded && transform.parent != null)
@@ -227,22 +236,13 @@ public class Control : MonoBehaviour
             }
 		}
 
-		if (collision.gameObject.tag == "Enemy")
+		if (collision.gameObject.tag == "Enemy" && !defending)
 		{
             
 			BroadcastMessage("GotHit", collision);
 			hitback = true;
 			backforce = 1f * -View.x;
-			
-			if (backforce > 0.0f)
-			{
-				backforce -= 0.25f; //Ascent slowdown rate
-			}
-			else if (backforce > -1.5f)
-			{ 
-				//Max slowdown speed
-				backforce -= 0.95f; //Descent speedup rate
-			}
+
 		}
 	}
 

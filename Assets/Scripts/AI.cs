@@ -18,7 +18,7 @@ public class AI : MonoBehaviour {
     bool isFlying;
     public bool isHeavy;
 
-    Vector3 View
+    public Vector3 View
     {
 
         get
@@ -92,7 +92,7 @@ public class AI : MonoBehaviour {
             Destroy(gameObject);
             Scores.mainScore.enemiesKilled++;
         }
-        if (!isFlying)
+        if (!isFlying && !gameObject.GetComponent<AIphysics>().hitback)
         {
             transform.Translate(View * Speed * Time.deltaTime, Space.World);
 

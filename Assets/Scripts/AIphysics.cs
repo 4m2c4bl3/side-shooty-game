@@ -6,13 +6,28 @@ public class AIphysics : MonoBehaviour {
 
     float backforce = 0.0f;
     float yforce = 0.0f;
-    bool hitback = false; 
+    public bool _hitback = false; 
     bool grounded = false;
     public Vector3 movement = Vector3.zero;
+    public AI thisAI;
 
+    
+    bool hitback
+    {
+        get 
+        {
+            return _hitback;
+        }
+
+        set
+        {
+            _hitback = value;
+        }
+    }
 
     void Update ()
     {
+        movement = Vector3.zero;
 
         movement.y = yforce;
         if (hitback)
@@ -37,6 +52,25 @@ public class AIphysics : MonoBehaviour {
                 yforce -= 0.75f; //Descent speedup rate
             }
         }
+
+        if (hitback)
+        {
+
+            if (backforce <= -1.5f)
+            {
+                //Max slowdown speed
+                backforce += 0.95f; //Descent speedup rate
+            }
+
+            else if (backforce <= 0.0f)
+            {
+                backforce += 0.25f; //Ascent slowdown rate
+            }
+
+            movement.x = backforce; 		
+
+        }
+
     }
     void FixedUpdate()
 	{
@@ -53,6 +87,14 @@ public class AIphysics : MonoBehaviour {
             {
                 yforce = 0.0f;
             }
+        }
+
+        if (collision.gameObject.tag == "Player" && Control.mainControl.defending)
+        {
+
+            hitback = true;
+            backforce = 1f * -thisAI.View.x;
+
         }
     }
     void OnCollisionStay(Collision collision)
