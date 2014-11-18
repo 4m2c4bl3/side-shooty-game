@@ -12,7 +12,7 @@ public class AIphysics : MonoBehaviour {
     public AI thisAI;
 
     
-    bool hitback
+   public bool hitback
     {
         get 
         {

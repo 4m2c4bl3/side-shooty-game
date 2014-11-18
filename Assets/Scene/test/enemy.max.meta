@@ -1,0 +1,233 @@
+fileFormatVersion: 2
+guid: 9109e2647f9bec846b4f2371fae065b2
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Body
+    100002: CATRigHub001
+    100004: CATRigHub002
+    100006: CATRigHub003
+    100008: CATRigHub004
+    100010: CATRigHub004Bone001
+    100012: CATRigHub004Bone001Bone001
+    100014: CATRigHub004Bone001Bone002
+    100016: CATRigLArm1
+    100018: CATRigLArm1 1
+    100020: CATRigLArm2
+    100022: CATRigLArm2 1
+    100024: CATRigLArmDigit11
+    100026: CATRigLArmDigit11 1
+    100028: CATRigLArmDigit21
+    100030: CATRigLArmDigit21 1
+    100032: CATRigLArmDigit22
+    100034: CATRigLArmDigit22 1
+    100036: CATRigLArmPalm
+    100038: CATRigLArmPalm 1
+    100040: CATRigRArm1
+    100042: CATRigRArm2
+    100044: CATRigRArmDigit11
+    100046: CATRigRArmDigit21
+    100048: CATRigRArmDigit22
+    100050: CATRigRArmPalm
+    100052: CATRigSpine
+    100054: CATRigSpine1
+    100056: CATRigSpine1 1
+    100058: CATRigSpine2
+    100060: CATRigSpine2 1
+    100062: CATRigSpine3
+    100064: CATRigTail1
+    100066: CATRigTail1 1
+    100068: CATRigTail1 2
+    100070: CATRigTail1 3
+    100072: CATRigTail1 4
+    100074: CATRigTail1 5
+    100076: CATRigTail1 6
+    100078: CATRigTail1 7
+    100080: CATRigTail2
+    100082: CATRigTail2 1
+    100084: CATRigTail2 2
+    100086: CATRigTail2 3
+    100088: CATRigTail2 4
+    100090: CATRigTail2 5
+    100092: CATRigTail2 6
+    100094: CATRigTail2 7
+    100096: CATRigTail3
+    100098: CATRigTail3 1
+    100100: CATRigTail3 2
+    100102: CATRigTail3 3
+    100104: CATRigTail3 4
+    100106: CATRigTail3 5
+    100108: CATRigTail3 6
+    100110: CATRigTail3 7
+    100112: CATRigTail4
+    100114: CATRigTail4 1
+    100116: CATRigTail4 2
+    100118: CATRigTail4 3
+    100120: CATRigTail4 4
+    100122: CATRigTail4 5
+    100124: CATRigTail4 6
+    100126: CATRigTail4 7
+    100128: CATRigTail5
+    100130: CATRigTail5 1
+    100132: CATRigTail5 2
+    100134: CATRigTail5 3
+    100136: CATRigTail5 4
+    100138: CATRigTail5 5
+    100140: CATRigTail5 6
+    100142: CATRigTail5 7
+    100144: Character001
+    100146: Cone001
+    100148: //RootNode
+    100150: Moster
+    100152: Object001
+    100154: Object002
+    100156: Object003
+    100158: Sky001
+    400000: Body
+    400002: CATRigHub001
+    400004: CATRigHub002
+    400006: CATRigHub003
+    400008: CATRigHub004
+    400010: CATRigHub004Bone001
+    400012: CATRigHub004Bone001Bone001
+    400014: CATRigHub004Bone001Bone002
+    400016: CATRigLArm1
+    400018: CATRigLArm1 1
+    400020: CATRigLArm2
+    400022: CATRigLArm2 1
+    400024: CATRigLArmDigit11
+    400026: CATRigLArmDigit11 1
+    400028: CATRigLArmDigit21
+    400030: CATRigLArmDigit21 1
+    400032: CATRigLArmDigit22
+    400034: CATRigLArmDigit22 1
+    400036: CATRigLArmPalm
+    400038: CATRigLArmPalm 1
+    400040: CATRigRArm1
+    400042: CATRigRArm2
+    400044: CATRigRArmDigit11
+    400046: CATRigRArmDigit21
+    400048: CATRigRArmDigit22
+    400050: CATRigRArmPalm
+    400052: CATRigSpine
+    400054: CATRigSpine1
+    400056: CATRigSpine1 1
+    400058: CATRigSpine2
+    400060: CATRigSpine2 1
+    400062: CATRigSpine3
+    400064: CATRigTail1
+    400066: CATRigTail1 1
+    400068: CATRigTail1 2
+    400070: CATRigTail1 3
+    400072: CATRigTail1 4
+    400074: CATRigTail1 5
+    400076: CATRigTail1 6
+    400078: CATRigTail1 7
+    400080: CATRigTail2
+    400082: CATRigTail2 1
+    400084: CATRigTail2 2
+    400086: CATRigTail2 3
+    400088: CATRigTail2 4
+    400090: CATRigTail2 5
+    400092: CATRigTail2 6
+    400094: CATRigTail2 7
+    400096: CATRigTail3
+    400098: CATRigTail3 1
+    400100: CATRigTail3 2
+    400102: CATRigTail3 3
+    400104: CATRigTail3 4
+    400106: CATRigTail3 5
+    400108: CATRigTail3 6
+    400110: CATRigTail3 7
+    400112: CATRigTail4
+    400114: CATRigTail4 1
+    400116: CATRigTail4 2
+    400118: CATRigTail4 3
+    400120: CATRigTail4 4
+    400122: CATRigTail4 5
+    400124: CATRigTail4 6
+    400126: CATRigTail4 7
+    400128: CATRigTail5
+    400130: CATRigTail5 1
+    400132: CATRigTail5 2
+    400134: CATRigTail5 3
+    400136: CATRigTail5 4
+    400138: CATRigTail5 5
+    400140: CATRigTail5 6
+    400142: CATRigTail5 7
+    400144: Character001
+    400146: Cone001
+    400148: //RootNode
+    400150: Moster
+    400152: Object001
+    400154: Object002
+    400156: Object003
+    400158: Sky001
+    2300000: Body
+    2300002: Cone001
+    2300004: Moster
+    2300006: Object001
+    3300000: Body
+    3300002: Cone001
+    3300004: Moster
+    3300006: Object001
+    4300000: Body
+    4300002: Moster
+    4300004: Object001
+    4300006: Cone001
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
