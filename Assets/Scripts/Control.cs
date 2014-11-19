@@ -25,7 +25,8 @@ public class Control : MonoBehaviour
     bool _defending = false;
 	public Vector3 movement = Vector3.zero;
     public static Control mainControl;
-	
+    public Animator animator;
+
     public bool defending
     {
         get
@@ -153,14 +154,23 @@ public class Control : MonoBehaviour
 		    if (MoveRight)
 		    {
 			    movement += Vector3.right * (grounded ? 1.0f : aircontrol);
-			    View = Vector3.right;
+                View = Vector3.right;
+                animator.SetFloat("direction", View.x);
+                animator.SetBool("running", true);
+                
 		    }
 		    if (MoveLeft)
 		    {
 			    movement += Vector3.left * (grounded ? 1.0f : aircontrol);
-			    View = Vector3.left;
+                View = Vector3.left;
+                animator.SetBool("running", true);
 			
 		    }
+            if (!MoveLeft && !MoveRight)
+            {
+                animator.SetFloat("direction", View.x);
+                animator.SetBool("running", false);
+            }
 		    if (Jump && grounded == true)
 		    {
 			    yforce = 4.5f; //Intial jump force
