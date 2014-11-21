@@ -24,7 +24,6 @@ public class Platforms : MonoBehaviour {
     Timer damageTimer = new Timer();
 	Timer waitTimer = new Timer();
 	Timer moveProg = new Timer();
-    public Color wood;
 
 	// Use this for initialization
 	void Start () {
@@ -155,7 +154,7 @@ public class Platforms : MonoBehaviour {
 
         if (stage == 0)
         {
-            colChange(wood);
+            colChange(Color.white);
         }
         else if (stage == 1)
         {
