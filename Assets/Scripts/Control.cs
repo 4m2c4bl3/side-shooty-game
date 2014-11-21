@@ -14,7 +14,7 @@ public class Control : MonoBehaviour
     Souls equippedSoul;
 	//public float Shootrate = 0.5f;
 	//private float Pause = 0.0f;
-	public Vector3 View = new Vector3(1f, 0f, 0f);
+    private Vector3 _view;
     public bool hangYes = false;
 	float hangtime = 0.35f;
 	float backforce = 0.0f;
@@ -26,6 +26,19 @@ public class Control : MonoBehaviour
 	public Vector3 movement = Vector3.zero;
     public static Control mainControl;
     public Animator animator;
+
+    public Vector3 View
+    {
+        get
+        {
+            return _view;
+        }
+        set
+        {
+            _view = value;
+            animator.SetFloat("direction", _view.x);
+        }
+    }
 
     public bool defending
     {
@@ -82,6 +95,7 @@ public class Control : MonoBehaviour
 	
 	void Start()
     {
+        View = new Vector3(1f, 0f, 0f);
         equippedSoul = gameObject.GetComponent<Souls>();
         mainControl = this;
     }
@@ -146,12 +160,10 @@ public class Control : MonoBehaviour
             if (MoveRight)
             {
                 View = Vector3.right;
-                animator.SetFloat("direction", View.x);
             }
             if (MoveLeft)
             {
                 View = Vector3.left;
-                animator.SetFloat("direction", View.x);
             }
         }
         if (isControllable)
