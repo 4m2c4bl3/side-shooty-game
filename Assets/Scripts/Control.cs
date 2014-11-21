@@ -140,17 +140,25 @@ public class Control : MonoBehaviour
 
         if (!isControllable && defending)
         {
+
+            animator.SetBool("blocking", true);
+
             if (MoveRight)
             {
                 View = Vector3.right;
+                animator.SetFloat("direction", View.x);
             }
             if (MoveLeft)
             {
                 View = Vector3.left;
+                animator.SetFloat("direction", View.x);
             }
         }
         if (isControllable)
-        { 
+        {
+
+            animator.SetBool("blocking", false);
+
 		    if (MoveRight)
 		    {
 			    movement += Vector3.right * (grounded ? 1.0f : aircontrol);
