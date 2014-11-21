@@ -24,13 +24,11 @@ public class Platforms : MonoBehaviour {
     Timer damageTimer = new Timer();
 	Timer waitTimer = new Timer();
 	Timer moveProg = new Timer();
-    Renderer childRenderer;
     public Color wood;
 
 	// Use this for initialization
 	void Start () {
 
-        childRenderer = GetComponentInChildren<Renderer>();
 
         if (damaging && startdelay >= 0.1)
         {
@@ -143,7 +141,13 @@ public class Platforms : MonoBehaviour {
 		}
 	}
 
-
+    void colChange (Color colour)
+    {
+        foreach(MeshRenderer rendin2smallpieces in GetComponentsInChildren<MeshRenderer>())
+        {
+            rendin2smallpieces.material.color = colour;
+        }
+    }
 
     void damRun(int callstage)
     {
@@ -151,18 +155,16 @@ public class Platforms : MonoBehaviour {
 
         if (stage == 0)
         {
-            childRenderer.material.color = wood;
-            renderer.material.color = wood;
+            colChange(wood);
         }
         else if (stage == 1)
         {
-            childRenderer.material.color = Color.yellow;
-            renderer.material.color = Color.yellow;
+
+            colChange(Color.yellow);
         }
         else if (stage == 2)
-        {          
-            childRenderer.material.color = Color.red;
-            renderer.material.color = Color.red;
+        {
+            colChange(Color.red);
         }
         
     }
@@ -171,25 +173,25 @@ public class Platforms : MonoBehaviour {
     {
         stage = callstage;
         Material visibility = new Material(gameObject.renderer.material);
-        Material childVisibility = new Material(childRenderer.material);
+        //Material childVisibility = new Material(childRenderer.material);
         Color vis = visibility.color;
-        Color childVis = childVisibility.color;
+        //Color childVis = childVisibility.color;
         
         if (stage == 0)
         {
             vis.a = 1;
-            childVis.a = 1;
+            //childVis.a = 1;
             collider.enabled = true;
         }
         else if (stage == 1)
         {
             vis.a = 0.5f;
-            childVis.a = 0.5f;
+            //childVis.a = 0.5f;
         }
         else if (stage == 2)
         {
             vis.a = 0;
-            childVis.a = 0;
+            //childVis.a = 0;
             collider.enabled = false;
 			waitTimer.setTimer(5);
 
