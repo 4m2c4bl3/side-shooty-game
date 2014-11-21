@@ -171,6 +171,7 @@ public class Control : MonoBehaviour
 		    {
 			    movement += Vector3.left * (grounded ? 1.0f : aircontrol);
                 View = Vector3.left;
+                animator.SetFloat("direction", View.x);
                 animator.SetBool("running", true);
 			
 		    }
