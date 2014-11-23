@@ -26,6 +26,8 @@ public class Control : MonoBehaviour
 	public Vector3 movement = Vector3.zero;
     public static Control mainControl;
     public Animator animator;
+    bool isSolid;
+    Collision lastHit;
 
     public Vector3 View
     {
@@ -95,17 +97,32 @@ public class Control : MonoBehaviour
 	
 	void Start()
     {
+        isSolid = true;
         View = new Vector3(1f, 0f, 0f);
         equippedSoul = gameObject.GetComponent<Souls>();
         mainControl = this;
     }
 
+    public void Dead(bool dead)
+    {
+        if (!dead)
+        {
+            isSolid = true;
+        }
+
+        if (dead)
+        {
+            isSolid = false;
+        }
+    }
+
 	public void Shoot()
 	{
 		if (equippedSoul.Energy >= 0.0)
-		{
+        {
+            animator.Play(Animator.StringToHash("Attack"));
 			Vector3 SpawnPoint = transform.position + (View * 1);
-            SpawnPoint.y += 0.3f;
+            SpawnPoint.y += 1f;
 			GameObject swing = Instantiate(BasicBullet.gameObject, SpawnPoint, transform.rotation) as GameObject;
 			Attack shooted = swing.GetComponent<Attack>();
 			shooted.dir = View;
@@ -137,6 +154,7 @@ public class Control : MonoBehaviour
         rigidbody.sleepVelocity = 0;
 		//Shootrate = equippedSoul.AttSpeed;
 		bool ShootNow = Input.GetKeyDown(KeyCode.Space) /*&& Shootpause()*/;
+
 		if (isControllable)
         { 
 		    if (ShootNow)
@@ -176,7 +194,10 @@ public class Control : MonoBehaviour
 			    movement += Vector3.right * (grounded ? 1.0f : aircontrol);
                 View = Vector3.right;
                 animator.SetFloat("direction", View.x);
-                animator.SetBool("running", true);
+                if (grounded == true)
+                {
+                    animator.SetBool("running", true);
+                }
                 
 		    }
 		    if (MoveLeft)
@@ -184,7 +205,11 @@ public class Control : MonoBehaviour
 			    movement += Vector3.left * (grounded ? 1.0f : aircontrol);
                 View = Vector3.left;
                 animator.SetFloat("direction", View.x);
-                animator.SetBool("running", true);
+                animator.SetBool("running", true); 
+                if (grounded == true)
+                {
+                    animator.SetBool("running", true);
+                }
 			
 		    }
             if (!MoveLeft && !MoveRight)
@@ -196,8 +221,17 @@ public class Control : MonoBehaviour
 		    {
 			    yforce = 4.5f; //Intial jump force
 			    grounded = false;
-
 		    }
+
+            if (grounded == false)
+            {
+                animator.SetBool("jumping", true);
+                animator.SetBool("running", false);
+            }
+            if (grounded == true)
+            {
+                animator.SetBool("jumping", false);
+            }
         }
             if (Hang && hangYes)
             {
@@ -216,7 +250,7 @@ public class Control : MonoBehaviour
 
             if (backforce <= -1.5f)
             {
-                //Max slowdown speed
+
                 backforce += 0.95f; //Descent speedup rate
             }
 
@@ -248,6 +282,10 @@ public class Control : MonoBehaviour
 				yforce -= 0.75f; //Descent speedup rate
 			}
 		}
+        if (isSolid)
+        {
+            Physics.IgnoreCollision(lastHit.gameObject.collider, gameObject.collider, false);
+        }
 	}
 	
 	void FixedUpdate()
@@ -258,23 +296,36 @@ public class Control : MonoBehaviour
 	}
 	
 	void OnCollisionEnter(Collision collision)
-	{
+    {
+
+        if (collision.gameObject.tag == "Enemy" && !isSolid)
+        {
+            Physics.IgnoreCollision(collision.gameObject.collider, gameObject.collider, true);
+            lastHit = collision;
+        }
+
 		if (collision.gameObject.tag == "Ground")
 		{
             if (collision.contacts.All(x => x.normal == Vector3.down)) // MOAR MAJICKS
             {
                 yforce = 0.0f;
             }
-		}
+        }
 
-		if (collision.gameObject.tag == "Enemy" && !defending)
-		{
-            
+        if (collision.gameObject.tag == "Enemy" && defending && isSolid)
+        {
+            lastHit = collision;
+        }
+
+		if (collision.gameObject.tag == "Enemy" && !defending && isSolid)
+        {
 			BroadcastMessage("GotHit", collision);
 			hitback = true;
-			backforce = 1f * -View.x;
+            backforce = 1f * -View.x;
+            lastHit = collision;
 
 		}
+
 	}
 
     void OnCollisionStay(Collision collision)

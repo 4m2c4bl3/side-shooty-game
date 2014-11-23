@@ -101,8 +101,7 @@ public class Platforms : MonoBehaviour {
             if (stage == 0 && damageTimer.Ok())
             {
                 damageTimer.setTimer(warningLength);
-                disRun(1);
-                
+                disRun(1);                
             }
             else if (stage == 1 && damageTimer.Ok())
             {
@@ -147,6 +146,34 @@ public class Platforms : MonoBehaviour {
             rendin2smallpieces.material.color = colour;
         }
     }
+    void opaChange(float visNum)
+    {
+        foreach (MeshRenderer rendin2smallpieces in GetComponentsInChildren<MeshRenderer>())
+        {
+            Material visibility = new Material(gameObject.renderer.material);
+            Color vis = visibility.color;
+            vis.a = visNum;
+            rendin2smallpieces.material.color = vis;
+            visibility.color = vis;
+            gameObject.renderer.material = visibility;
+
+            if (visNum == 0)
+            {
+                foreach (MeshRenderer rendin2smallpiecessub in GetComponentsInChildren<MeshRenderer>())
+                {
+                    rendin2smallpiecessub.renderer.enabled = false;
+                }
+            }
+            if (visNum == 1)
+            {
+                foreach (MeshRenderer rendin2smallpiecessub in GetComponentsInChildren<MeshRenderer>())
+                {
+                    rendin2smallpiecessub.renderer.enabled = true;
+                }
+            }
+
+        }
+    }
 
     void damRun(int callstage)
     {
@@ -171,32 +198,24 @@ public class Platforms : MonoBehaviour {
     void disRun(int callstage)
     {
         stage = callstage;
-        Material visibility = new Material(gameObject.renderer.material);
-        //Material childVisibility = new Material(childRenderer.material);
-        Color vis = visibility.color;
-        //Color childVis = childVisibility.color;
+        
         
         if (stage == 0)
         {
-            vis.a = 1;
-            //childVis.a = 1;
+            opaChange(1);
             collider.enabled = true;
         }
         else if (stage == 1)
         {
-            vis.a = 0.5f;
-            //childVis.a = 0.5f;
+            opaChange(0.5f);
         }
         else if (stage == 2)
         {
-            vis.a = 0;
-            //childVis.a = 0;
+            opaChange(0);
             collider.enabled = false;
 			waitTimer.setTimer(5);
 
         }
-        visibility.color = vis;
-        gameObject.renderer.material = visibility;
     }
 
     void lerpMove ()

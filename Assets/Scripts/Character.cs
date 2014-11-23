@@ -26,6 +26,7 @@ public class Character : MonoBehaviour {
                 {
                     transTimer.setTimer(2);
                     Control.mainControl.isControllable = false;
+                    Control.mainControl.Dead(true);
                 }
                 if (transTimer.Ok())
                 {
@@ -35,6 +36,7 @@ public class Character : MonoBehaviour {
                     gameObject.GetComponent<Control>().movement = Vector3.zero;
                     transform.position = startPos;
                     Control.mainControl.isControllable = true;
+                    Control.mainControl.Dead(false);
                     transTimer.sleep();
                     respawn = false;
                 }
