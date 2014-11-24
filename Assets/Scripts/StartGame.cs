@@ -4,11 +4,12 @@ using System.Collections;
 public class StartGame : MonoBehaviour {
 
 	public GameObject Player;
-    Timer countDown = new Timer();
+    public static StartGame s;
+    public Timer countDown = new Timer();
 
 	// Use this for initialization
 	void Start () {
-
+        s = this;
         GameObject.Find("Player").GetComponent<Control>().isControllable = false;
         guiText.text= "CLIMB";
 		Souls EquippedSoul = Player.GetComponent<Souls> ();
@@ -16,7 +17,7 @@ public class StartGame : MonoBehaviour {
         EquippedSoul.Energy = 1;
         Time.timeScale = 1;
         //Player.GetComponent<Character>().startPos = Player.transform.position;
-        countDown.setTimer(2);
+        countDown.setTimer(1);
 	}
 
     void Update ()
