@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections;
 
 public class pauseMenu : MonoBehaviour {
@@ -57,7 +57,7 @@ public class pauseMenu : MonoBehaviour {
 
                 playSound.p.Play(6);
                 Application.Quit();
-                EditorApplication.isPlaying = false;
+                //EditorApplication.isPlaying = false;
             }
 
             GUI.EndGroup();
