@@ -5,9 +5,15 @@ using System.Collections;
 public class Menu : MonoBehaviour {
 
     GameObject controlInfo;
+    public GameObject bgm;
 
     void Start()
     {
+        if (GameObject.FindGameObjectWithTag("BGM") == null)
+        {
+            GameObject BGMusic = Instantiate(bgm.gameObject, transform.position, transform.rotation) as GameObject;
+        }
+
         controlInfo = GameObject.FindGameObjectWithTag("ControlInfo");
 
         if (gameObject.name == "FinalScore")
