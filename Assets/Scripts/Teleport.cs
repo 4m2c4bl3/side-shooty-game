@@ -21,6 +21,7 @@ public class Teleport : MonoBehaviour {
             jumpPause.setTimer(1);
             Control.mainControl.movement = Vector3.zero;
             Control.mainControl.isControllable = false;
+            playSound.p.Play(4);
             porting = true;
         }
     }

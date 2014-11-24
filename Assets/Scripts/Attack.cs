@@ -14,9 +14,22 @@ public class Attack : MonoBehaviour
 
     void OnCollisionEnter (Collision hit)
     {
-        bool desTROyit = hit.gameObject.tag == "Enemy" || hit.gameObject.name == "Platform" || hit.gameObject.name == "Boundary";
-        if (desTROyit)
+        bool playerAttack = hit.gameObject.tag == "Enemy" || hit.gameObject.name == "Platform" || hit.gameObject.name == "Boundary";
+        if (playerAttack && Shooter.name == "Player")
+        {
             Destroy(gameObject);
+        }
+
+        bool enemyAttack = hit.gameObject.tag == "Player" || hit.gameObject.name == "Platform" || hit.gameObject.name == "Boundary";
+        if (enemyAttack && Shooter.name == "AngryEnemy")
+        {
+            Destroy(gameObject);
+        }
+
+        if (hit.gameObject.name == "Bullet(Clone)")
+        { 
+            Physics.IgnoreCollision(hit.gameObject.collider, gameObject.collider, true); 
+        }
 
     }
 

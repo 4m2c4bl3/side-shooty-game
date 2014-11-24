@@ -28,6 +28,11 @@ public class Menu : MonoBehaviour {
     {
         if (gameObject.name == "Start" || gameObject.name == "Reload")
         {
+            playSound.p.Play(6);
+            if (GameObject.FindGameObjectWithTag("Score") != null)
+            {
+                GameObject.Destroy(GameObject.FindGameObjectWithTag("Score"));
+            }
             Application.LoadLevel("game");
             Game.current = new Game();
         }
@@ -38,6 +43,7 @@ public class Menu : MonoBehaviour {
 
         if (gameObject.name == "Quit")
         {
+            playSound.p.Play(6);
             Application.Quit();
             EditorApplication.isPlaying = false;
         }

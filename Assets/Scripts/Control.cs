@@ -97,6 +97,7 @@ public class Control : MonoBehaviour
 	
 	void Start()
     {
+
         isSolid = true;
         View = new Vector3(1f, 0f, 0f);
         equippedSoul = gameObject.GetComponent<Souls>();
@@ -121,6 +122,7 @@ public class Control : MonoBehaviour
 		if (equippedSoul.Energy >= 0.0)
         {
             animator.Play(Animator.StringToHash("Attack"));
+            playSound.p.Play(0);
 			Vector3 SpawnPoint = transform.position + (View * 1);
             SpawnPoint.y += 1f;
 			GameObject swing = Instantiate(BasicBullet.gameObject, SpawnPoint, transform.rotation) as GameObject;
@@ -196,6 +198,7 @@ public class Control : MonoBehaviour
                 animator.SetFloat("direction", View.x);
                 if (grounded == true)
                 {
+                   // playSound.p.loopPlay(5, true); shitty sfx lol
                     animator.SetBool("running", true);
                 }
                 
@@ -208,17 +211,20 @@ public class Control : MonoBehaviour
                 animator.SetBool("running", true); 
                 if (grounded == true)
                 {
+                    // playSound.p.loopPlay(5, true); shitty sfx lol
                     animator.SetBool("running", true);
                 }
 			
 		    }
             if (!MoveLeft && !MoveRight)
             {
+                playSound.p.loopPlay(5, false);
                 animator.SetFloat("direction", View.x);
                 animator.SetBool("running", false);
             }
 		    if (Jump && grounded == true)
-		    {
+            {
+                playSound.p.Play(2);
 			    yforce = 4.5f; //Intial jump force
 			    grounded = false;
 		    }
@@ -282,9 +288,10 @@ public class Control : MonoBehaviour
 				yforce -= 0.75f; //Descent speedup rate
 			}
 		}
-        if (isSolid)
+        if (isSolid && lastHit != null)
         {
-            Physics.IgnoreCollision(lastHit.gameObject.collider, gameObject.collider, false);
+                Physics.IgnoreCollision(lastHit.gameObject.collider, gameObject.collider, false);
+
         }
 	}
 	
@@ -325,6 +332,15 @@ public class Control : MonoBehaviour
             lastHit = collision;
 
 		}
+
+        if (collision.gameObject.name == "Bullet(Clone)" && !defending && isSolid)
+        {
+            if (collision.gameObject.GetComponent<Attack>().Shooter.name == "AngryEnemy")
+            {
+                BroadcastMessage("GotHit", collision);
+                lastHit = collision;
+            }
+        }
 
 	}
 

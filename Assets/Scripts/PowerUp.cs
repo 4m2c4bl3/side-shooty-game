@@ -88,7 +88,7 @@ public class PowerUp : MonoBehaviour {
 	{
        	if (other.gameObject.name == "Player") 
 		{
-		
+            playSound.p.Play(3);
 			if (Heal)
 			{
 				Healrun();

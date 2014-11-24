@@ -27,6 +27,7 @@ public class Character : MonoBehaviour {
                     transTimer.setTimer(2);
                     Control.mainControl.isControllable = false;
                     Control.mainControl.Dead(true);
+                    playSound.p.Play(7);
                 }
                 if (transTimer.Ok())
                 {
@@ -59,7 +60,10 @@ public class Character : MonoBehaviour {
     void Damaged(int Power)
     {
         if (equippedSoul.Defence < Power && !Control.mainControl.defending)
-        {equippedSoul.CurHP -= Power - equippedSoul.Defence; }
+        {
+            playSound.p.Play(1);
+            equippedSoul.CurHP -= Power - equippedSoul.Defence; 
+        }
     }
 	public void pureDamaged(int Power)
 	{
@@ -90,6 +94,7 @@ public class Character : MonoBehaviour {
                 }
                 if (lives <= 0)
                 {
+                    playSound.p.Play(6);
                     transTimer.setTimer(1);
                     if (transTimer.Ok())
                     {
@@ -104,6 +109,7 @@ public class Character : MonoBehaviour {
     {
         if (collision.gameObject.name == "LevelComplete")
         {
+            playSound.p.Play(6);
             Scores.mainScore.completedMap = true;
             Control.mainControl.isControllable = false;
             transTimer.setTimer(1);

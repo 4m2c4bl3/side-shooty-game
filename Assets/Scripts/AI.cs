@@ -13,10 +13,18 @@ public class AI : MonoBehaviour {
     public float flyDist;
     Timer moveProg = new Timer();
     Timer animTimer = new Timer();
+    Timer shootTimer = new Timer();
     Souls equippedSoul;
     bool isBasic;
     bool isFlying;
-    public bool isHeavy;
+    bool isHeavy;
+    bool isAngry;
+    bool isAttacking;
+    public float attSpeed = 1.75f;
+    public Attack BasicBullet;
+    Vector3 shootDir = new Vector3(0, 0, 0);
+    bool isLeft;
+    float rufRotate;
 
     public Vector3 View
     {
@@ -31,6 +39,15 @@ public class AI : MonoBehaviour {
             if (_view != value)
             {
                 transform.Rotate(new Vector3(0, 180, 0));
+                rufRotate = Mathf.Round(transform.rotation.y);
+                if (transform.rotation.y != 180)
+                {
+                    isLeft = true;
+                }
+                if (rufRotate == 0)
+                {
+                    isLeft = false;
+                }
             }
 
             _view = value;
@@ -56,6 +73,14 @@ public class AI : MonoBehaviour {
             isHeavy = true;
             equippedSoul.MaxHP = 1;
             Heavy();
+        }
+
+        if (gameObject.name == "AngryEnemy")
+        {
+            isAngry = true;
+            equippedSoul.MaxHP = 1;
+            equippedSoul.Speed = 20;
+
         }
         equippedSoul.CurHP = equippedSoul.MaxHP;
         if (isFlying)
@@ -94,7 +119,10 @@ public class AI : MonoBehaviour {
         }
         if (!isFlying && !gameObject.GetComponent<AIphysics>().hitback)
         {
-            transform.Translate(View * Speed * Time.deltaTime, Space.World);
+            if (!isAttacking)
+            {
+                transform.Translate(View * Speed * Time.deltaTime, Space.World);
+            }
 
         }
             if (isFlying)
@@ -115,6 +143,75 @@ public class AI : MonoBehaviour {
                     renderer.material.color = Color.white;
                 }
             }
+
+        if (isAngry)
+        {
+            float playerPos = Mathf.Round(Character.mainChar.gameObject.transform.position.y);
+            float myPos = Mathf.Round(transform.position.y);
+            if (myPos == playerPos)
+            {
+                print(shootDir.x);
+
+                isAttacking = true;
+                if (!shootTimer.inuse)
+                {
+                    shootTimer.setTimer(attSpeed);
+                }
+                print("smp");
+                shootDir.x = Character.mainChar.gameObject.transform.position.x;
+                             
+
+                if (isLeft)
+                {
+                    if (Character.mainChar.gameObject.transform.position.x < gameObject.transform.position.x)
+                    {
+                        shootDir.x = 1.0f;
+                    }
+
+                    if (Character.mainChar.gameObject.transform.position.x > gameObject.transform.position.x)
+                    {
+                        shootDir.x = -1.0f;
+                    }
+                }
+
+                if (!isLeft)
+                {
+                    if (Character.mainChar.gameObject.transform.position.x < gameObject.transform.position.x)
+                    {
+                        shootDir.x = -1.0f;
+                    }
+
+                    if (Character.mainChar.gameObject.transform.position.x > gameObject.transform.position.x)
+                    {
+                        shootDir.x = 1.0f;
+                    }
+                }
+
+
+            } 
+            else
+            {                
+                isAttacking = false;
+            }
+
+            if (shootTimer.Ok())
+            {
+                print("wao");
+                playSound.p.Play(0);
+                Vector3 SpawnPoint = transform.position + (View * 1);
+                SpawnPoint.y += 0.2f;
+                GameObject swing = Instantiate(BasicBullet.gameObject, SpawnPoint, transform.rotation) as GameObject;
+                Attack shooted = swing.GetComponent<Attack>();
+                shooted.dir = shootDir;
+                shooted.Speed = equippedSoul.Speed;
+                shooted.Strength = equippedSoul.Strength;
+                shooted.Shooter = gameObject;
+                equippedSoul.Energy -= equippedSoul.useEnergy;
+                Physics.IgnoreCollision(shooted.collider, collider);
+                shootTimer.sleep();
+
+            }
+        }
 
         }
   
@@ -155,7 +252,7 @@ public class AI : MonoBehaviour {
                     }
                 }
                 
-                if (isBasic)
+                if (isBasic || isAngry)
                 {
                     Damaged(enemyattack.Strength);
                     renderer.material.color = Color.red;

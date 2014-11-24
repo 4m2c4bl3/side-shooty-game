@@ -5,7 +5,7 @@ public class Timer {
 
     float timerstart = 0;
     float input = 0;
-	bool inuse = false;
+	public bool inuse = false;
 
     public void setTimer (float inpoot)
     { 
