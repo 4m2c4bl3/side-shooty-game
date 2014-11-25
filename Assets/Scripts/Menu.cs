@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-//using UnityEditor;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using System.Collections;
 
 public class Menu : MonoBehaviour {
@@ -51,7 +53,9 @@ public class Menu : MonoBehaviour {
         {
             playSound.p.Play(6);
             Application.Quit();
-            //EditorApplication.isPlaying = false;
+        #if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+        #endif
         }
     }
 
