@@ -169,7 +169,7 @@ public class Control : MonoBehaviour
         bool MoveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
         bool Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         bool Hang = Input.GetKey(KeyCode.K);
-        defending = Input.GetKey(KeyCode.L);	
+        defending = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);	
         movement = Vector3.zero;
 
         if (!isControllable && defending)
@@ -288,7 +288,7 @@ public class Control : MonoBehaviour
 				yforce -= 0.75f; //Descent speedup rate
 			}
 		}
-        if (isSolid && lastHit != null)
+        if (isSolid && lastHit != null) //this and all things involving isSolid & lastHit are not by maxime which is why they're giving errors :'D
         {
                 Physics.IgnoreCollision(lastHit.gameObject.collider, gameObject.collider, false);
 

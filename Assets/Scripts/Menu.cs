@@ -63,7 +63,7 @@ public class Menu : MonoBehaviour {
     {
         if (gameObject.name == "Controls")
         {
-            controlInfo.guiText.text = "Use WASD or arrow keys to navigate. \nA and D or Left and Right to move,\nW and Up to jump. \nUse Space Bar To Shoot.";
+            controlInfo.guiText.text = "Use WASD or arrow keys to navigate. \nA and D or Left and Right to move,\nW and Up to jump. Use S or Down to block\nand use Space Bar To Shoot.";
         }
     }
     void OnMouseExit()
