@@ -150,25 +150,25 @@ public class Platforms : MonoBehaviour {
     {
         foreach (MeshRenderer rendin2smallpieces in GetComponentsInChildren<MeshRenderer>())
         {
-            Material visibility = new Material(gameObject.renderer.material);
+            Material visibility = new Material(gameObject.GetComponent<Renderer>().material);
             Color vis = visibility.color;
             vis.a = visNum;
             rendin2smallpieces.material.color = vis;
             visibility.color = vis;
-            gameObject.renderer.material = visibility;
+            gameObject.GetComponent<Renderer>().material = visibility;
 
             if (visNum == 0)
             {
                 foreach (MeshRenderer rendin2smallpiecessub in GetComponentsInChildren<MeshRenderer>())
                 {
-                    rendin2smallpiecessub.renderer.enabled = false;
+                    rendin2smallpiecessub.GetComponent<Renderer>().enabled = false;
                 }
             }
             if (visNum == 1)
             {
                 foreach (MeshRenderer rendin2smallpiecessub in GetComponentsInChildren<MeshRenderer>())
                 {
-                    rendin2smallpiecessub.renderer.enabled = true;
+                    rendin2smallpiecessub.GetComponent<Renderer>().enabled = true;
                 }
             }
 
@@ -203,7 +203,7 @@ public class Platforms : MonoBehaviour {
         if (stage == 0)
         {
             opaChange(1);
-            collider.enabled = true;
+            GetComponent<Collider>().enabled = true;
         }
         else if (stage == 1)
         {
@@ -212,7 +212,7 @@ public class Platforms : MonoBehaviour {
         else if (stage == 2)
         {
             opaChange(0);
-            collider.enabled = false;
+            GetComponent<Collider>().enabled = false;
 			waitTimer.setTimer(5);
 
         }

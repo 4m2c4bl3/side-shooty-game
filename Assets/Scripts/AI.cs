@@ -95,7 +95,7 @@ public class AI : MonoBehaviour {
     {
             GameObject shield = GameObject.CreatePrimitive(PrimitiveType.Cube);
             shield.transform.position = new Vector3(transform.position.x + View.x, transform.position.y, transform.position.z);
-            shield.collider.enabled = false; 
+            shield.GetComponent<Collider>().enabled = false; 
             shield.transform.parent = gameObject.transform;
     }
 
@@ -105,7 +105,7 @@ public class AI : MonoBehaviour {
         {
             if (!isFlying)
             {
-                renderer.material.color = Color.red;
+                GetComponent<Renderer>().material.color = Color.red;
             }
             else
             {
@@ -140,7 +140,7 @@ public class AI : MonoBehaviour {
 
                 else
                 {
-                    renderer.material.color = Color.white;
+                    GetComponent<Renderer>().material.color = Color.white;
                 }
             }
 
@@ -207,7 +207,7 @@ public class AI : MonoBehaviour {
                 shooted.Strength = equippedSoul.Strength;
                 shooted.Shooter = gameObject;
                 equippedSoul.Energy -= equippedSoul.useEnergy;
-                Physics.IgnoreCollision(shooted.collider, collider);
+                Physics.IgnoreCollision(shooted.GetComponent<Collider>(), GetComponent<Collider>());
                 shootTimer.sleep();
 
             }
@@ -247,7 +247,7 @@ public class AI : MonoBehaviour {
                     if (View == Control.mainControl.View)
                     {
                         Damaged(enemyattack.Strength);
-                        renderer.material.color = Color.red;
+                        GetComponent<Renderer>().material.color = Color.red;
                         animTimer.setTimer(0.1f);
                     }
                 }
@@ -255,7 +255,7 @@ public class AI : MonoBehaviour {
                 if (isBasic || isAngry)
                 {
                     Damaged(enemyattack.Strength);
-                    renderer.material.color = Color.red;
+                    GetComponent<Renderer>().material.color = Color.red;
                     animTimer.setTimer(0.1f);
                 }
 

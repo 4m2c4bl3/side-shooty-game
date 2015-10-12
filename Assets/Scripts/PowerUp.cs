@@ -34,14 +34,14 @@ public class PowerUp : MonoBehaviour {
 		}
     void Update()
     {
-        if (gameObject.collider.isTrigger == false)
+        if (gameObject.GetComponent<Collider>().isTrigger == false)
         {
             pausedDestroy();
         }
     }
     void pausedDestroy()
     {
-     gameObject.collider.isTrigger = false;
+     gameObject.GetComponent<Collider>().isTrigger = false;
         if (destTimer.Ok())
         {
             Destroy(gameObject);

@@ -28,7 +28,7 @@ public class Attack : MonoBehaviour
 
         if (hit.gameObject.name == "Bullet(Clone)")
         { 
-            Physics.IgnoreCollision(hit.gameObject.collider, gameObject.collider, true); 
+            Physics.IgnoreCollision(hit.gameObject.GetComponent<Collider>(), gameObject.GetComponent<Collider>(), true); 
         }
 
     }

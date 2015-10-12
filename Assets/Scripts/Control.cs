@@ -132,7 +132,7 @@ public class Control : MonoBehaviour
 			shooted.Strength = equippedSoul.Strength;
 			shooted.Shooter = gameObject;
 			equippedSoul.Energy -= equippedSoul.useEnergy;
-			Physics.IgnoreCollision(shooted.collider, collider);
+			Physics.IgnoreCollision(shooted.GetComponent<Collider>(), GetComponent<Collider>());
 		}
 		
 	}
@@ -153,7 +153,7 @@ public class Control : MonoBehaviour
 	
 	void Update()
 	{
-        rigidbody.sleepVelocity = 0;
+        GetComponent<Rigidbody>().sleepVelocity = 0;
 		//Shootrate = equippedSoul.AttSpeed;
 		bool ShootNow = Input.GetKeyDown(KeyCode.Space) /*&& Shootpause()*/;
 
@@ -270,7 +270,7 @@ public class Control : MonoBehaviour
 
         if (grounded && transform.parent != null)
         {
-            TestGround(transform.parent.collider);
+            TestGround(transform.parent.GetComponent<Collider>());
         }
 		
 		if (!grounded)
@@ -290,7 +290,7 @@ public class Control : MonoBehaviour
 		}
         if (isSolid && lastHit != null) //this and all things involving isSolid & lastHit are not by maxime which is why they're giving errors :'D
         {
-                Physics.IgnoreCollision(lastHit.gameObject.collider, gameObject.collider, false);
+                Physics.IgnoreCollision(lastHit.gameObject.GetComponent<Collider>(), gameObject.GetComponent<Collider>(), false);
 
         }
 	}
@@ -298,8 +298,8 @@ public class Control : MonoBehaviour
 	void FixedUpdate()
 	{
 		//Needs to be done in fixed update because rigidbodies digs it
-		rigidbody.velocity = Vector3.zero;
-		rigidbody.MovePosition(rigidbody.position + (movement * 10.0f * Time.deltaTime));
+		GetComponent<Rigidbody>().velocity = Vector3.zero;
+		GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + (movement * 10.0f * Time.deltaTime));
 	}
 	
 	void OnCollisionEnter(Collision collision)
@@ -307,7 +307,7 @@ public class Control : MonoBehaviour
 
         if (collision.gameObject.tag == "Enemy" && !isSolid)
         {
-            Physics.IgnoreCollision(collision.gameObject.collider, gameObject.collider, true);
+            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), gameObject.GetComponent<Collider>(), true);
             lastHit = collision;
         }
 
@@ -378,7 +378,7 @@ public class Control : MonoBehaviour
     void TestGround(Collider col)
     {
         RaycastHit rayhit;
-        Physics.Raycast(transform.position, Vector3.down, out rayhit, collider.bounds.extents.y + 0.4f, 1 << 10 | 1 << 11);
+        Physics.Raycast(transform.position, Vector3.down, out rayhit, GetComponent<Collider>().bounds.extents.y + 0.4f, 1 << 10 | 1 << 11);
         if (rayhit.collider == null || rayhit.collider != col)
         {
             grounded = false;

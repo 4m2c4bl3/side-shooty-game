@@ -22,11 +22,11 @@ public class Menu : MonoBehaviour {
         {
             if (Scores.mainScore.completedMap == true)
             {
-                guiText.text = "You Won! \n You killed " + Scores.mainScore.enemiesKilled + " enemies.\n You died " + Scores.mainScore.livesLost + " times.";
+                GetComponent<GUIText>().text = "You Won! \n You killed " + Scores.mainScore.enemiesKilled + " enemies.\n You died " + Scores.mainScore.livesLost + " times.";
             }
             if (Scores.mainScore.completedMap == false)
             {
-                guiText.text = "You Lost. \n You killed " + Scores.mainScore.enemiesKilled + " enemies.\n You died " + Scores.mainScore.livesLost + " times.";
+                GetComponent<GUIText>().text = "You Lost. \n You killed " + Scores.mainScore.enemiesKilled + " enemies.\n You died " + Scores.mainScore.livesLost + " times.";
             }
 
         }
@@ -63,14 +63,14 @@ public class Menu : MonoBehaviour {
     {
         if (gameObject.name == "Controls")
         {
-            controlInfo.guiText.text = "Use WASD or arrow keys to navigate. \nA and D or Left and Right to move,\nW and Up to jump. Use S or Down to block\nand use Space Bar To Shoot.";
+            controlInfo.GetComponent<GUIText>().text = "Use WASD or arrow keys to navigate. \nA and D or Left and Right to move,\nW and Up to jump. Use S or Down to block\nand use Space Bar To Shoot.";
         }
     }
     void OnMouseExit()
     {
         if (gameObject.name == "Controls")
         {
-            controlInfo.guiText.text = "";
+            controlInfo.GetComponent<GUIText>().text = "";
         }
     }
 	

@@ -16,7 +16,7 @@ public class StartGame : MonoBehaviour {
             GameObject BGMusic = Instantiate(bgm.gameObject, Player.transform.position, transform.rotation) as GameObject;
         }
         GameObject.Find("Player").GetComponent<Control>().isControllable = false;
-        guiText.text= "CLIMB";
+        GetComponent<GUIText>().text= "CLIMB";
 		Souls EquippedSoul = Player.GetComponent<Souls> ();
 		EquippedSoul.BroadcastMessage("BaseSoul");
         EquippedSoul.Energy = 1;

@@ -38,7 +38,7 @@ public class AIphysics : MonoBehaviour {
 
         if (grounded && transform.parent != null)
         {
-            TestGround(transform.parent.collider);
+            TestGround(transform.parent.GetComponent<Collider>());
         }
 
         if (!grounded)
@@ -75,8 +75,8 @@ public class AIphysics : MonoBehaviour {
     void FixedUpdate()
 	{
 		//Needs to be done in fixed update because rigidbodies digs it
-		rigidbody.velocity = Vector3.zero;
-		rigidbody.MovePosition(rigidbody.position + (movement * 10.0f * Time.deltaTime));
+		GetComponent<Rigidbody>().velocity = Vector3.zero;
+		GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + (movement * 10.0f * Time.deltaTime));
 	}
 
     void OnCollisionEnter(Collision collision)
@@ -132,7 +132,7 @@ public class AIphysics : MonoBehaviour {
     void TestGround(Collider col)
     {
         RaycastHit rayhit;
-        Physics.Raycast(transform.position, Vector3.down, out rayhit, collider.bounds.extents.y + 0.4f, 1 << 10 | 1 << 11);
+        Physics.Raycast(transform.position, Vector3.down, out rayhit, GetComponent<Collider>().bounds.extents.y + 0.4f, 1 << 10 | 1 << 11);
         if (rayhit.collider == null || rayhit.collider != col)
         {
             grounded = false;
